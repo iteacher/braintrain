@@ -1,0 +1,24 @@
+name: Deploy to A2Hosting
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.A2HOSTING_SSH_KEY }}
+
+    - name: Deploy to A2Hosting
+      run: |
+        ssh manders1@manders-jones.eu "cd /home/manders1/node_apps/braintrain/my-app && git pull origin master && npm install && npm run build && forever restartall"
+
