@@ -21,4 +21,3 @@ jobs:
     - name: Deploy to A2Hosting
       run: |
         ssh manders1@manders-jones.eu "cd /home/manders1/node_apps/braintrain/my-app && git pull origin master && npm install && npm run build && forever restartall"
-
