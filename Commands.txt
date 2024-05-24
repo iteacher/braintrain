@@ -1,0 +1,95 @@
+11111111
+22222222
+333333333
+
+## A USEFUL LIST OF DEVELOPMENT ENVIRONMENT COMMANDS
+----------------------------------------------------------
+----------------------------------------------------------
+
+## Pull the Latest Changes:
+        git branch
+        git checkout branch-name  # replace branch-name with your branch, e.g., main or master
+        git pull origin branch-name  # replace branch-name with your branch name
+        Handle Merge Conflicts (if any):
+
+----------------------------------------------------------
+## Conflicts when pull
+
+        Check Repository Status:
+        Before pulling changes, you may want to check the status of your local repository to ensure 
+        there are no uncommitted changes:
+        git status
+
+        Fetch the latest changes from the remote repository without merging them:
+        git fetch origin
+
+        If there are merge conflicts, Git will notify you. You will need to resolve these conflicts manually. 
+        Open the conflicting files, resolve the conflicts, and then commit the changes:
+        git add .
+        git commit -m "Resolved merge conflicts"
+
+
+----------------------------------------------------------
+## FORCE PUSH TO GIT
+        echo "Trigger workflow" >> README.md                
+        git add README.md
+        git commit -m "Trigger GitHub Actions workflow"
+        git push origin master
+
+----------------------------------------------------------
+## PUSH TO GIT
+        git add .  
+        git commit -m "SSH KEYS SET.  PUSH TO SERVER FIX."
+        git push origin master
+
+----------------------------------------------------------
+## Manual node startup
+        kill -9 7711 4002 4803 3847 4793
+        nvm use x.xxx
+        npm install
+        npm run build
+
+----------------------------------------------------------
+## Manual Install dependencies
+        nvm use 14
+        npm install react react-dom express @react-oauth/google
+        npm install react/jsx-runtime
+        pkill node
+
+----------------------------------------------------------
+## Terminal Process Control
+        ps faux
+        top
+        ps -e | wc -l
+        ps -ef | wc -l
+        ps -e --no-headers | wc -l
+        ls /proc | grep '^[0-9]' | wc -l
+        ps -ef | grep defunct
+
+----------------------------------------------------------
+## List versions
+        ldd --version
+        which npx
+        which node
+        node -v
+        npm -v
+        npx -v
+        npm stop
+        npm cache clean --force
+
+----------------------------------------------------------
+## Steps for a Clean Restart
+        rm -rf build
+        npm run build
+        pm2 start server.js --name braintrain
+        pm2 logs braintrain
+
+        pm2 restart braintrain. OR  pm2 reload braintrain
+
+----------------------------------------------------------
+## KEEP RUNNING
+        npm install pm2@latest -g
+        pm2 start server.js --name braintrain
+        pm2 startup
+        pm2 save
+        pm2 status
