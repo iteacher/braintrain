@@ -1,174 +1,52 @@
-Private key
-SHA256:zqLW1AXnRwgz5gP89D/aD0mE9QVMablMmV1W20AL4kc=
-
-
-GIT COMMANDS
-git add .  
-git commit -m "The 2nd push & commit"
+## FORCE PUSH TO GIT
+echo "Trigger workflow" >> README.md                
+git add README.md
+git commit -m "Trigger GitHub Actions workflow"
 git push origin master
 
-# In your local project directory, add the GitHub repository as a remote:
-git remote add github https://github.com/your_username/braintrain.git
+----------------------------------------------------------
+## PUSH TO GIT
+git add .  
+git commit -m "Description of job done."
+git push origin master
 
-# Push your local repository to GitHub
-git push -u github master
-
-#Set your GitHub remote URL to use SSH:
-git remote set-url origin git@github.com:iteacher/braintrain.git
-
-#Push your code to GitHub:
-git push -u origin master
-
-
-
-
-
-
-
-
-========================================
-START UP
-
+----------------------------------------------------------
+## Manual node startup
 kill -9 7711 4002 4803 3847 4793
-nvm use 14
+nvm use x.xxx
 npm install
 npm run build
 
-
+----------------------------------------------------------
+## Manual Install dependencies
 nvm use 14
 npm install react react-dom express @react-oauth/google
 npm install react/jsx-runtime
 pkill node
-pm2 start server.js --name braintrain
-pm2 save
-pm2 status
-pm2 logs braintrain
 
-============
-QUICK RESTART
-pm2 restart braintrain
-pm2 status
-
-
-=======================================
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-cd ~/node_apps/braintrain/my-app && nvm use
-
-
-
-
-
-
-
-http://handler.js:616/
-
-
-nodevenv/node_apps/braintrain/19/bin
-
-
-export PATH=$PATH:/home/manders1/nodevenv/node_apps/braintrain/19/bin
-
-
-mv node_apps/braintrain/public/* node_apps/braintrain/my-app/public/
-
-
-echo 'export PATH=$PATH:/home/manders1/nodevenv/node_apps/braintrain/19/bin' >> ~/.bashrc
-
-
-
-echo 'export PATH=$PATH:/home/manders1/nodevenv/node_apps/braintrain/19/bin' >> ~/.bashrc
-
-------
-cd ~/node_apps/braintrain/my-app
-
-
-manders1
-
+----------------------------------------------------------
+## Terminal Process Control
 ps faux
 top
 ps -e | wc -l
 ps -ef | wc -l
 ps -e --no-headers | wc -l
 ls /proc | grep '^[0-9]' | wc -l
-
-
-kill -9 7711 4002 4803 3847 4793
 ps -ef | grep defunct
 
-
-
-
+----------------------------------------------------------
+## List versions
 ldd --version
-
-npm start
-
-nvm install 14
-nvm use 14
-
 which npx
 which node
-nano ~/.bashrc
-
-npm install -g create-react-app
-npm root -g
-
-
-echo $PATH
-export PATH=$PATH:/path/to/your/nodejs/bin
-export PATH=$PATH:/path/to/your/npm/bin
-
-export PATH=$PATH:$(npm bin -g)
-ls $(npm bin -g)/npx
-ls /opt/alt/alt-nodejs19/root/usr/bin/npx
-export PATH=$PATH:/opt/alt/alt-nodejs19/root/usr/bin
-export PATH=$PATH:/home/manders1/nodeenv/node_apps/braintrain/19/bin
-echo 'export PATH=$PATH:/home/manders1/nodeenv/node_apps/braintrain/19/bin' >> ~/.bashrc
-source ~/.bashrc
-
-
 node -v
 npm -v
 npx -v
-
 npm stop
-
-rm -rf node_modules package-lock.json
 npm cache clean --force
 
-npm install --scripts-prepend-node-path
-npm start --scripts-prepend-node-path
-babel-node --inspect server.js
-npx babel-node server.js
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-
-npm install @babel/core @babel/node @babel/preset-env @babel/preset-react
-
-
-npm ls webpack
-npm install webpack@4.44.2 --save-dev
-npm install webpack@4.44.2
-
-npm install react-scripts --save-dev
-
-npx create-react-app my-app
-
-npx -v
-npx npm install
-npm install -g npx
-
-npm root -g
-
-npm install
-npm run build
-
---------------------------
-Steps for a Clean Restart
-pm2 stop braintrain
+----------------------------------------------------------
+## Steps for a Clean Restart
 rm -rf build
 npm run build
 pm2 start server.js --name braintrain
@@ -176,21 +54,10 @@ pm2 logs braintrain
 
 pm2 restart braintrain. OR  pm2 reload braintrain
 
------------------------------
-KEEP RUNNING
+----------------------------------------------------------
+## KEEP RUNNING
 npm install pm2@latest -g
 pm2 start server.js --name braintrain
 pm2 startup
 pm2 save
 pm2 status
-
-
-
-
-
-
-
-
-
-
-

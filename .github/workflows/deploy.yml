@@ -18,6 +18,8 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.A2HOSTING_SSH_KEY }}
 
-    - name: Deploy to A2Hosting
+    - name: Push code to A2Hosting
       run: |
-        ssh manders1@manders-jones.eu "cd /home/manders1/node_apps/braintrain/my-app && git pull origin master && npm install && npm run build && forever restartall"
+        ssh manders1@manders-jones.eu "
+          cd /home/manders1/node_apps/braintrain/my-app &&
+          git pull origin master"
