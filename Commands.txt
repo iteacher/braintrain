@@ -6,6 +6,25 @@
 ----------------------------------------------------------
 ----------------------------------------------------------
 
+git fetch origin
+git checkout master
+git merge origin/master
+    OR 
+        ## Merge with Allow Unrelated Histories:
+        git merge origin/master --allow-unrelated-histories
+        
+        ## IF conflicts, resolve manually by edditing file.  Add Resolved Files
+        git add file1 file2 etc
+        
+        ## Commit Changes
+        git commit -m "Resolved merge conflicts"
+       
+        ## Verify Merge Status:
+        git status
+
+
+
+
 ## Pull the Latest Changes:
         git branch
         git checkout branch-name  # replace branch-name with your branch, e.g., main or master
