@@ -1,3 +1,5 @@
+11111111
+
 ## FORCE PUSH TO GIT
 echo "Trigger workflow" >> README.md                
 git add README.md
@@ -7,7 +9,7 @@ git push origin master
 ----------------------------------------------------------
 ## PUSH TO GIT
 git add .  
-git commit -m "Description of job done."
+git commit -m "SSH KEYS SET.  PUSH TO SERVER FIX."
 git push origin master
 
 ----------------------------------------------------------
