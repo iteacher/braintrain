@@ -23,8 +23,6 @@ git merge origin/master
         git status
 
 
-
-
 ## Pull the Latest Changes:
         git branch
         git checkout branch-name  # replace branch-name with your branch, e.g., main or master
@@ -100,15 +98,19 @@ git merge origin/master
 ## Steps for a Clean Restart
         rm -rf build
         npm run build
-        pm2 start server.js --name braintrain
-        pm2 logs braintrain
-
-        pm2 restart braintrain. OR  pm2 reload braintrain
 
 ----------------------------------------------------------
-## KEEP RUNNING
-        npm install pm2@latest -g
-        pm2 start server.js --name braintrain
-        pm2 startup
-        pm2 save
-        pm2 status
+----------------------SSH PROMPTS------------------------
+----------------------------------------------------------
+
+## Generate a New SSH Key Pair:
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_ed25519
+    chmod 600 ~/.ssh/authorized_keys
+    chmod 700 ~/.ssh
+    cat ~/.ssh/id_ed25519
+    cat ~/.ssh/id_ed25519.pub
+
+## Add Public Key to authorized_keys:
+    echo "THE-PUBLIC-KEY" >> ~/.ssh/authorized_keys
