@@ -26,6 +26,16 @@ git merge origin/master
         git pull origin branch-name  # replace branch-name with your branch name
         Handle Merge Conflicts (if any):
 
+##  Steps to Open a Pull Request
+a "Pull Request" (PR) is a feature that allows you to notify team members that you 
+have completed a feature or a fix and that you want them to review your changes 
+and possibly merge them into a target branch (here its usually master). 
+Here’s a breakdown of what it means to "open a pull request":
+        git checkout -b my-feature-branch
+        # Make your changes
+        git add .
+        git commit -m "Add my feature"
+        git push origin my-feature-branch
 ----------------------------------------------------------
 ## Conflicts when pull
 
