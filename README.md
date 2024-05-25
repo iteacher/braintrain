@@ -1,5 +1,7 @@
 # Braintrain
 
+Live demo:  https://manders-jones.eu/braintrain
+
 Braintrain is a Node.js and React application designed to simulate a neural network for middle and high school students. Through interactive exercises and games, students learn about the role of neurons, hidden layers, weights, neural propagation, adaptation strategies, function approximation (approximators), bias, and feedback. The game supports class activities with any group size, allowing each student to log in securely and participate.
 
 ## Table of Contents
