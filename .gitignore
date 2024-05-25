@@ -19,3 +19,6 @@ server.js
 #Ignore vs code setup
 .vscode/
 
+#Ignore private keys
+.env
+
