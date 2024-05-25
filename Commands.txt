@@ -3,6 +3,8 @@
 ----------------------------------------------------------
 :wq
 
+VSCode > Push > Git to A2 > A2 auto back to Git > local sync / local rebase.
+
 git fetch origin
 git checkout master
 git merge origin/master
