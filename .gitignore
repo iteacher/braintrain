@@ -16,3 +16,6 @@ build
 #Ignore local node setup
 server.js
 
+#Ignore vs code setup
+/.vscode
+
