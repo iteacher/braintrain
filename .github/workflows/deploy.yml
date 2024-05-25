@@ -18,6 +18,12 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.A2HOSTING_SSH_KEY }}
           
+      - name: Debug SSH Connection
+        run: |
+          echo "Testing SSH connection..."
+          ssh -v manders1@manders-jones.eu 'echo "SSH connection established."'
+
       - name: Deploy to A2 Hosting
         run: |
+          echo "Starting deployment..."
           ssh manders1@manders-jones.eu 'cd ~/node_apps/braintrain/my-app && git pull origin master && git add . && git commit -m "Web host in sync" && git push origin master'
