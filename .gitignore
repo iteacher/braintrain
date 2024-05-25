@@ -8,4 +8,11 @@ build
 /public/.htaccess
 
 # Ignore .DS_Store file
-.DS_Store
+.DS_Store 
+
+# Ignore local Apache server environment
+.htaccess
+
+#Ignore local node setup
+server.js
+

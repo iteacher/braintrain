@@ -28,3 +28,9 @@ app.use((err, req, res, next) => {
 app.listen(() => {
     console.log('Server is running.');
 });
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
+
