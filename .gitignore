@@ -22,3 +22,6 @@ server.js
 #Ignore private keys
 .env
 
+#Ignore local error logs
+nohup.out
+
