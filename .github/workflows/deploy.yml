@@ -18,17 +18,11 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the project
-        run: npm run build
-
       - name: Start SSH Agent
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.A2HOSTING_SSH_KEY }}
-
+          
       - name: Deploy to A2 Hosting
         run: |
           ssh manders1@manders-jones.eu 'cd ~/node_apps/braintrain/my-app && git pull origin master && git add . && git commit -m "Web host in sync" && git push origin master'
