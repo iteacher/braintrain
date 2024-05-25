@@ -31,4 +31,4 @@ jobs:
 
       - name: Deploy to A2 Hosting
         run: |
-        ssh manders1@manders-jones.eu 'cd ~/node_apps/braintrain/my-app && git pull origin master && git add . && git commit -m "Web host in sync" && git push origin master'
+          ssh manders1@manders-jones.eu 'cd ~/node_apps/braintrain/my-app && git pull origin master && git add . && git commit -m "Web host in sync" && git push origin master'
