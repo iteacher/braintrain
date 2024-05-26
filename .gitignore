@@ -28,4 +28,5 @@ nohup.out
 #Ignore clone conflicts
 package.json
 package-lock.json
+firebaseConfig.json
 
