@@ -15,7 +15,8 @@ getFirebaseConfig().then(firebaseConfig => {
     console.error('Error fetching Firebase config:', error);
 });
 
-console.log('Environment Variables:', REACT_APP_API_KEY);
+console.log('Environment Variables:', process.env.NEXT_PUBLIC_REACT_APP_API_KEY);
+//console.log('Environment Variables:', REACT_APP_API_KEY);
 
 
 // firebaseInit.js
