@@ -1,3 +1,5 @@
+console.log('Environment Variables:', process.env.REACT_APP_API_KEY);
+
 // firebaseInit.js
 const firebaseConfig = {
     apiKey: "AIzaSyD_potT3TgBJvHKhhPSKNQ-kR84BPfdBu8",
