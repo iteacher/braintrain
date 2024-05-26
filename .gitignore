@@ -31,5 +31,5 @@ package-lock.json
 firebaseConfig.json
 
 #DO NOT PUSH PRIVATE KEYS
-/public/KEYS.js
+/public/js/KEYS.js
 
