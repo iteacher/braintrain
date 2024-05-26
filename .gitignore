@@ -32,4 +32,5 @@ firebaseConfig.json
 
 #DO NOT PUSH PRIVATE KEYS
 /public/js/KEYS.js
+KEYS.js
 
