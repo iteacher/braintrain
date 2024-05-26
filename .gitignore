@@ -25,3 +25,7 @@ server.js
 #Ignore local error logs
 nohup.out
 
+#Ignore clone conflicts
+package.json
+package-lock.json
+
