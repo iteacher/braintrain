@@ -1,24 +1,3 @@
-async function getFirebaseConfig() {
-    const response = await fetch('/env');
-    const config = await response.json();
-    return config;
-}
-
-getFirebaseConfig().then(firebaseConfig => {
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.database().ref().child('.info/connected').on('value', (snapshot) => {
-        const connected = snapshot.val();
-        console.log(`Connected: ${connected}`);
-    });
-}).catch(error => {
-    console.error('Error fetching Firebase config:', error);
-});
-
-//console.log('Environment Variables:', process.env.NEXT_PUBLIC_REACT_APP_API_KEY);
-//console.log('Environment Variables:', REACT_APP_API_KEY);
-
-
 // firebaseInit.js
 const firebaseConfig = {
     apiKey: "AIzaSyD_potT3TgBJvHKhhPSKNQ-kR84BPfdBu8",
