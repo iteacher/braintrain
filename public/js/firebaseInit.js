@@ -2,21 +2,21 @@ async function getFirebaseConfig() {
     const response = await fetch('/env');
     const config = await response.json();
     return config;
-  }
-  
-  getFirebaseConfig().then(firebaseConfig => {
+}
+
+getFirebaseConfig().then(firebaseConfig => {
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     firebase.database().ref().child('.info/connected').on('value', (snapshot) => {
-      const connected = snapshot.val();
-      console.log(`Connected: ${connected}`);
+        const connected = snapshot.val();
+        console.log(`Connected: ${connected}`);
     });
-  }).catch(error => {
+}).catch(error => {
     console.error('Error fetching Firebase config:', error);
-  });
-  
+});
 
 console.log('Environment Variables:', process.env.REACT_APP_API_KEY);
+
 
 // firebaseInit.js
 const firebaseConfig = {
