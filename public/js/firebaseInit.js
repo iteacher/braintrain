@@ -1,4 +1,8 @@
-// firebaseInit.js
+/* firebaseInit.js
+Security Note: Firebase configuration does not contain any sensitive information.
+The actual authentication is handled by Firebase's servers.
+CHANGE THESE TO YOUR OWN FIREBASE.
+*/
 const firebaseConfig = {
   apiKey: "AIzaSyD_potT3TgBJvHKhhPSKNQ-kR84BPfdBu8",
   authDomain: "braintrain-3bf0f.firebaseapp.com",
