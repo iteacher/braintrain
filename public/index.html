@@ -18,25 +18,14 @@
     
     <!-- Load Google Identity Services library -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/braintrain/js/coi-serviceworker.js')
-            .then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            }).catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-        }
-    </script>
    
 </head>
 <body>
     
     <div id="root"></div>
-     
-    <script src="/braintrain/js/firebaseInit.js"></script>
-    <script src="/braintrain/js/config.js"></script>
-    <script src="/braintrain/js/app-scripts.js"></script>
+    <script src="/js/firebaseInit.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/app-scripts.js"></script>
     
 
 

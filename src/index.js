@@ -5,20 +5,6 @@ import './styles/styles.css';
 
 console.log("Doing index.js");
 
-
-// Register the service worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/braintrain/coi-serviceworker.js')
-            .then(registration => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            })
-            .catch(error => {
-                console.log('ServiceWorker registration failed: ', error);
-            });
-    });
-}
-
 // Google OneTapLogin
 const OneTapLogin = () => {
     const login = useGoogleLogin({
