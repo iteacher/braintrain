@@ -1,126 +1,145 @@
+/* global google */
+/* global firebase */
+
+import { applyConfig } from './config.js';
+import './firebaseInit.js';
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    
-    applyConfig(); // Apply cross-domain policies
 
-    
-    function setupGoogleSignIn() {
-        const signInButton = document.getElementById('sign-in');
-        const signOutButton = document.getElementById('sign-out');
-        const status = document.getElementById('sign-in-status');
+    console.log("Page loaded");
 
-        // Ensure GoogleAuthProvider is accessed correctly
-        const provider = new window.GoogleAuthProvider();
+   // Listen for the custom 'firebaseReady' event
+   document.addEventListener('firebaseReady', function () {
+    console.log("Firebase is ready");
 
-        signInButton.addEventListener('click', () => {
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    const user = result.user;
-                    console.log("Signed in as", user);
+        applyConfig(); // Apply cross-domain policies
 
-                    status.textContent = `Signed in as ${user.displayName}`;
-                    signInButton.style.display = 'none';
-                    signOutButton.style.display = 'block';
-                    document.getElementById('main-content').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error('Error signing in:', error);
-                    status.textContent = `Sign-in failed: ${error.message}`;
-                });
+
+        function setupGoogleSignIn() {
+            const signInButton = document.getElementById('sign-in');
+            const signOutButton = document.getElementById('sign-out');
+            const status = document.getElementById('sign-in-status');
+
+            // Ensure GoogleAuthProvider is accessed correctly
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            signInButton.addEventListener('click', () => {
+                console.log("Sing-in button clicked");
+
+                window.auth.signInWithPopup(provider)
+                    .then(result => {
+                        const user = result.user;
+                        console.log("Signed in as", user);
+
+                        status.textContent = `Signed in as ${user.displayName}`;
+                        signInButton.style.display = 'none';
+                        signOutButton.style.display = 'block';
+                        document.getElementById('main-content').style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error signing in:', error);
+                        status.textContent = `Sign-in failed: ${error.message}`;
+                    });
+            });
+
+            signOutButton.addEventListener('click', () => {
+                window.auth.signOut()
+                    .then(() => {
+                        status.textContent = 'Signed out';
+                        signInButton.style.display = 'block';
+                        signOutButton.style.display = 'none';
+                        document.getElementById('main-content').style.display = 'none';
+                    })
+                    .catch(error => {
+                        console.error('Error signing out:', error);
+                        status.textContent = `Sign-out failed: ${error.message}`;
+                    });
+            });
+        }
+
+        setupGoogleSignIn();
+
+        // Ensure Firebase is initialized before using it
+        if (typeof firebase === 'undefined') {
+            console.error('Firebase SDK not loaded');
+            return;
+        }
+
+        //const auth = firebase.auth();
+        //const database = firebase.database();
+        //const ref = window.db.ref;
+        //const update = window.db.update;
+
+        //const db = firebase.database();
+
+        window.addEventListener('load', function () {
+            console.log("****************INIT FEDCM***************");
+            try {
+                initializeFedCM();
+                console.log("****************COMPLETED FEDCM***************");
+            } catch (error) {
+                console.error("Error initializing FedCM:", error);
+            }
+
         });
 
-        signOutButton.addEventListener('click', () => {
-            auth.signOut()
-                .then(() => {
-                    status.textContent = 'Signed out';
-                    signInButton.style.display = 'block';
-                    signOutButton.style.display = 'none';
-                    document.getElementById('main-content').style.display = 'none';
-                })
-                .catch(error => {
-                    console.error('Error signing out:', error);
-                    status.textContent = `Sign-out failed: ${error.message}`;
-                });
-        });
-    }
 
-    setupGoogleSignIn();
+        console.log("SETTING setupInteractions");
+        setupInteractions();
 
-    // Ensure Firebase is initialized before using it
-    if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK not loaded');
-        return;
-    }
+        console.log("SETTING UP drawPermanentLines");
+        drawPermanentLines();
 
-    //const auth = firebase.auth();
-    //const database = firebase.database();
-    const ref = db.ref;
-    const update = db.update;
+        console.log("SETTING UP setupLinkPrevention");
+        setupLinkPrevention();
 
-   //const db = firebase.database();
+        console.log("SETTING UP updateLinkButton");
+        updateLinkButton();
 
-    window.addEventListener('load', function () {
-        console.log("****************INIT FEDCM***************");
-        //initializeFedCM();
-        console.log("****************COMPLETED FEDCM***************");
+        console.log("SETTING UP setupGlobalClickListener");
+        setupGlobalClickListener();
 
+        console.log("SETTING UP setupInputListeners");
+        setupInputListeners();
+
+        console.log("SETTING UP setupScoreChangeListeners");
+        setupScoreChangeListeners();
+
+        console.log("SETTING UP setupBonusListeners");
+        setupBonusListeners();
+
+        console.log("SETTING UP setupResultsPopupListeners");
+        setupResultsPopupListeners();
+
+        console.log("SETTING UP setupResetTickboxesButton");
+        setupResetTickboxesButton();
+
+        console.log("SETTING UP setupMaxScoreButtons");
+        setupMaxScoreButtons();
+
+        console.log("SETTING UP setupSettingButton");
+        setupSettingButton();
+
+        console.log("SETTING UP setupNeuronListeners");
+        setupNeuronListeners();
+
+        console.log("SETTING UP loadAllNeuronData");
+        loadAllNeuronData();
+
+        console.log("SETTING UP updateNeuronFills");
+        updateNeuronFills();
+
+        //console.log("SETTING UP GOOGLE SIGN setupGoogleSignIn");
+        //setupGoogleSignIn();
+
+        console.log("CHECKING AUTH STATE");
+        checkAuthState();
+
+        console.log("****************FINISHED DOM LOAD***************");
     });
-
-
-    console.log("SETTING setupInteractions");
-    setupInteractions();
-    
-    console.log("SETTING UP drawPermanentLines");
-    drawPermanentLines();
-    
-    console.log("SETTING UP setupLinkPrevention");
-    setupLinkPrevention();
-    
-    console.log("SETTING UP updateLinkButton");
-    updateLinkButton();
-    
-    console.log("SETTING UP setupGlobalClickListener");
-    setupGlobalClickListener();
-    
-    console.log("SETTING UP setupInputListeners");
-    setupInputListeners();
-    
-    console.log("SETTING UP setupScoreChangeListeners");
-    setupScoreChangeListeners();
-
-    console.log("SETTING UP setupBonusListeners");
-    setupBonusListeners();
-
-    console.log("SETTING UP setupResultsPopupListeners");
-    setupResultsPopupListeners();
-
-    console.log("SETTING UP setupResetTickboxesButton");
-    setupResetTickboxesButton();
-
-    console.log("SETTING UP setupMaxScoreButtons");
-    setupMaxScoreButtons();
-
-    console.log("SETTING UP setupSettingButton");
-    setupSettingButton();
-
-    console.log("SETTING UP setupNeuronListeners");
-    setupNeuronListeners();
-
-    console.log("SETTING UP loadAllNeuronData");
-    loadAllNeuronData();
-
-    console.log("SETTING UP updateNeuronFills");
-    updateNeuronFills();
-
-    //console.log("SETTING UP GOOGLE SIGN setupGoogleSignIn");
-    //setupGoogleSignIn();
-
-    console.log("CHECKING AUTH STATE");
-    checkAuthState();
-
-    console.log("****************FINISHED DOM LOAD***************");
-
 });
-     
+
 function setupInputListeners() {
 
     console.log("Setting up input listeners...");
@@ -129,7 +148,7 @@ function setupInputListeners() {
 
     inputs.forEach(input => {
         console.log(`Setting listener for input: ${input.name || input.id}`);
-        input.addEventListener('input', function() {
+        input.addEventListener('input', function () {
             console.log(`Input changed for ${this.name || this.id}:`, this.value);
             // Call your update function here
             handleNeuronUpdate(this.dataset.neuronId);
@@ -140,7 +159,7 @@ function setupInputListeners() {
     if (saveGameButton) {
         saveGameButton.addEventListener('click', saveGameState);
     }
-    
+
     const loadGameButton = document.getElementById('load-game');
     if (loadGameButton) {
         loadGameButton.addEventListener('click', loadGameState);
@@ -156,8 +175,8 @@ function setupInputListeners() {
     }
 
     //listening for io changes to toggle compute button visiblity
-    predictionInput.addEventListener('input', toggleComputeButton() );
-    outputNeuronInput.addEventListener('input', toggleComputeButton() );
+    predictionInput.addEventListener('input', toggleComputeButton());
+    outputNeuronInput.addEventListener('input', toggleComputeButton());
 
     //Event listener for computer button clicked
     computeButton.addEventListener('click', function () {
@@ -171,7 +190,7 @@ function setupInputListeners() {
         }
 
         if (isNaN(predictionValue) || isNaN(outputValue)) {
-        return;
+            return;
         }
 
         // Too high
@@ -199,36 +218,36 @@ function setupInputListeners() {
         }
 
         displayResults(); // Call this function to display results after computation
-    });    
-            
+    });
+
 
     document.querySelectorAll('.score').forEach(scoreElement => {
-        scoreElement.addEventListener('input', function() {
+        scoreElement.addEventListener('input', function () {
             const neuronId = this.closest('.circle').getAttribute('data-id');
             const scoreValue = parseInt(this.textContent) || 0; // Assuming the score is an integer
             updateScoreInDB(neuronId, scoreValue);
         });
     });
-        
+
 
     document.getElementById('reset-scores').addEventListener('click', function () {
-        if (confirm('Are you sure you want to reset all scores?\nThis action cannot be undone.')) {
+        if (window.confirm('Are you sure you want to reset all scores?\nThis action cannot be undone.')) {
             const neurons = Array.from(document.querySelectorAll('.circle')); // Convert NodeList to an array
             //const db = firebase.database();
-    
+
             const updatePromises = neurons.map(neuron => {
                 const neuronId = neuron.getAttribute('data-id');
-                const neuronRef = db.ref('neurons/' + neuronId);
+                const neuronRef = window.db.ref('neurons/' + neuronId);
                 return neuronRef.update({ score: '0', fill: '0' });  // Reset score and fill to zero
             });
-    
+
             Promise.all(updatePromises)
                 .then(() => {
                     console.log('All scores reset successfully');
                     neurons.forEach(neuron => {
                         const scoreElement = neuron.querySelector('.score');
                         scoreElement.textContent = '0'; // Reset the score text immediately
-    
+
                         // Reset fill height in the UI immediately
                         const fillElement = neuron.querySelector('.fill');
                         if (fillElement) {
@@ -236,7 +255,7 @@ function setupInputListeners() {
                         }
                     });
                     // Call updateNeuronFills to ensure UI reflects the changes
-                    updateNeuronFills(); 
+                    updateNeuronFills();
                 })
                 .catch(error => {
                     console.error('Error resetting scores:', error);
@@ -244,13 +263,13 @@ function setupInputListeners() {
         }
     });
 }
-        
+
 
 
 function setupInteractions() {
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-    
+
     for (let i = 1; i <= 11; i++) {
         listenForNeuronChanges('neuron' + i);
     }
@@ -278,7 +297,7 @@ function setupInteractions() {
         circle.addEventListener('mouseleave', () => hidePopup(document.querySelector('.popup1')));
     });
 
-    const resultMessage = document.querySelector('.result-label');
+    //const resultMessage = document.querySelector('.result-label');
     const linkButton = document.getElementById('linkButton');
     const checkboxes = document.querySelectorAll('.checkbox');
     const circles = document.querySelectorAll('.circle');
@@ -333,7 +352,7 @@ function setupGlobalClickListener() {
         resetButton.addEventListener('click', function () {
             //console.log('Reset button clicked');
             // Confirm before resetting
-            if (confirm("Are you sure you want to reset all settings\nand clear all connections?")) {
+            if (window.confirm("Are you sure you want to reset all settings\nand clear all connections?")) {
                 resetNeuralNetwork();
                 initializeNeuronDataInDB();
             }
@@ -472,13 +491,13 @@ function updateLinkButton() {
     }
 }
 
-function areDifferentLayers(highlightedNodes) {
-    if (highlightedNodes.length === 2) {
-        return highlightedNodes[0].dataset.layer !== highlightedNodes[1].dataset.layer;
-    }
+// function areDifferentLayers(highlightedNodes) {
+//     if (highlightedNodes.length === 2) {
+//         return highlightedNodes[0].dataset.layer !== highlightedNodes[1].dataset.layer;
+//     }
 
-    return false;
-}
+//     return false;
+// }
 
 function triggerCheckboxEvent(checkbox) {
     //console.log('Triggering checkbox change');
@@ -532,11 +551,9 @@ function drawLineBetweenCircles(circle1, circle2, pairId) {
     document.body.appendChild(line); // Append line to a visible container
 
     // Ensure the line is hidden if not logged in
-    //const auth = firebase.auth();
-    const isAuthenticated = !!auth.currentUser;
+    const isAuthenticated = !!window.auth.currentUser;
     line.style.display = isAuthenticated ? 'block' : 'none';
 
-    //console.log(`Line drawn from ${circle1.dataset.id} to ${circle2.dataset.id}`);
     updateLinkButton(); // Ensure button text updates after drawing a new line
 }
 
@@ -580,16 +597,6 @@ function showPopup(element) {
     element.classList.add('active');
 }
 
-/* Functionality to hide popups */
-/* function hidePopup(element) {
-    element.style.opacity = '0';
-    element.style.transform = 'scale(0.95)';
-    element.addEventListener('transitionend', function () {
-        element.style.display = 'none';
-        element.classList.remove('active');
-    }, { once: true });
-} */
-
 function setupScoreChangeListeners() {
     const increaseButtons = document.querySelectorAll('.score-change[up-id]');
     const decreaseButtons = document.querySelectorAll('.score-change[down-id]');
@@ -627,14 +634,13 @@ function setupScoreChangeListeners() {
 
 function setupBonusListeners() {
     const add3Button = document.getElementById('add3');
-    const add5Button = document.getElementById('add5');
+    // const add5Button = document.getElementById('add5');
 
     add3Button.addEventListener('click', function () {
         //console.log('+3 button clicked');
         applyBonusToAllScores(3);
     });
 
-    //const add5Button = document.getElementById('add5');
     document.getElementById('add5').addEventListener('click', function () {
         this.disabled = true; // Disable the button to prevent further clicks during processing
         applyBonusToAllScores(5, () => {
@@ -730,8 +736,8 @@ function displayResults() {
 
     // Loop through each neuron and determine its status
     neurons.forEach(neuron => {
-        const neuronValue = neuron.querySelector('.number-box.large').value; // Ensure this targets the correct element
-        const neuronName = neuron.querySelector('.number-box.small').value; // This should fetch the value of the small text box
+        const neuronValue = neuron.querySelector('.number-box.large').value;
+        const neuronName = neuron.querySelector('.number-box.small').value;
         let status = 'ON PAR'; // Default status
 
         if (neuronValue > predictionValue) {
@@ -745,6 +751,7 @@ function displayResults() {
     });
 
     resultsHtml += '</tbody></table>';
+    let overallStatus = ''; // or any initial value that suits your needs
 
     // Determine overall status based on output value
     if (outputValue > predictionValue) {
@@ -765,28 +772,28 @@ function displayResults() {
     showPopup(document.getElementById('resultPopup'));
 }
 
-function animateScore(scoreElement, newScore, callback) {
-    let currentScore = parseInt(scoreElement.textContent);
-    const duration = 500; // Duration of the animation in milliseconds
-    const frameRate = 10; // Duration between each update
-    const totalFrames = duration / frameRate;
-    const increment = (newScore - currentScore) / totalFrames;
+// function animateScore(scoreElement, newScore, callback) {
+//     let currentScore = parseInt(scoreElement.textContent);
+//     const duration = 500; // Duration of the animation in milliseconds
+//     const frameRate = 10; // Duration between each update
+//     const totalFrames = duration / frameRate;
+//     const increment = (newScore - currentScore) / totalFrames;
 
-    let frame = 0;
-    const counter = setInterval(() => {
-        frame++;
-        currentScore += increment;
-        scoreElement.textContent = Math.floor(currentScore);
-        if (frame === totalFrames) {
-            scoreElement.textContent = newScore; // Ensures it ends on the exact value
-            clearInterval(counter);
-            scoreElement.classList.remove('score-animate');
-            if (callback) callback(); // Execute callback after animation completes
-        }
-    }, frameRate);
+//     let frame = 0;
+//     const counter = setInterval(() => {
+//         frame++;
+//         currentScore += increment;
+//         scoreElement.textContent = Math.floor(currentScore);
+//         if (frame === totalFrames) {
+//             scoreElement.textContent = newScore; // Ensures it ends on the exact value
+//             clearInterval(counter);
+//             scoreElement.classList.remove('score-animate');
+//             if (callback) callback(); // Execute callback after animation completes
+//         }
+//     }, frameRate);
 
-    scoreElement.classList.add('score-animate');
-}
+//     scoreElement.classList.add('score-animate');
+// }
 
 function resizeText() {
     const smallBoxes = document.querySelectorAll('.number-box.small');
@@ -824,7 +831,6 @@ function setupResetTickboxesButton() {
             const checkboxes = document.querySelectorAll('.checkbox');
             checkboxes.forEach(checkbox => {
                 checkbox.checked = false;
-                // If you need to trigger any change events as if user manually unchecked it
                 triggerCheckboxEvent(checkbox);
             });
         });
@@ -967,15 +973,15 @@ async function saveGameState() {
     }
 }
 
-// Example function to fetch link data, adjust based on actual link data management
+// TO DESIGN AND ADD - Example function to fetch link data, adjust based on actual link data management
 function getLinks(neuron) {
     const links = { left: '', right: '' }; // Placeholder for link ids
-    // Logic to populate links.left and links.right based on your actual application's link handling
+    // Logic to populate links.left and links.right based on application's link handling
     return links;
 }
 
 function setLinks(neuron, leftId, rightId) {
-    // Implement link setting logic based on your application's requirements
+    // Implement link setting logic based on application's requirements
 }
 
 async function loadGameState() {
@@ -994,7 +1000,7 @@ async function loadGameState() {
         const file = await fileHandle.getFile();
         const fileContent = await file.text();
 
-        // Now we process the file content as previously described
+        // Process the file content
         const lines = fileContent.split('\n'); // Split the file content into lines
         const inputOutputLine = lines[0].split(';').map(item => item.trim()); // Split first line into parts
         const hiddenNeuronsLine = lines[1].split(';').map(item => item.trim()); // Split second line into parts
@@ -1018,7 +1024,7 @@ async function loadGameState() {
             neuron.querySelector('.number-box.small').value = hiddenNeuronsLine[baseIndex];
             neuron.querySelector('.number-box.large').value = hiddenNeuronsLine[baseIndex + 1];
             neuron.querySelector('.score').textContent = hiddenNeuronsLine[baseIndex + 2];
-            // Assuming `setLinks` is a function to update neuron links visually or logically
+            // TO BE ADDED - Presently assuming `setLinks` is a function to update neuron links visually or logically
             setLinks(neuron, hiddenNeuronsLine[baseIndex + 3], hiddenNeuronsLine[baseIndex + 4]);
         });
 
@@ -1068,7 +1074,7 @@ function handleNeuronUpdate(neuronId) {
 // Listening for changes in neuron data
 function listenForNeuronChanges(neuronId) {
     //const db = firebase.database();
-    const neuronRef = db.ref('neurons/' + neuronId);
+    const neuronRef = window.db.ref('neurons/' + neuronId);
     neuronRef.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
@@ -1077,7 +1083,7 @@ function listenForNeuronChanges(neuronId) {
         }
     });
 }
-        
+
 
 
 // Function to update the DOM based on the neuron data
@@ -1092,7 +1098,7 @@ function updateNeuronDisplay(neuronId, data) {
     const largeInput = neuronElement.querySelector('input.number-box.large');
     const smallInput = neuronElement.querySelector('input.number-box.small');
     const scoreElement = neuronElement.querySelector('.score');
-    const fillElement = neuronElement.querySelector('.fill'); // Ensure this selector matches your HTML
+    const fillElement = neuronElement.querySelector('.fill'); // Ensure this selector matches HTML
 
 
     if (largeInput && data.large !== undefined) {
@@ -1109,14 +1115,14 @@ function updateNeuronDisplay(neuronId, data) {
     }
 }
 
-function saveNeuronData(neuronId, data) {
-    const dbRef = db.ref('neurons/' + neuronId);
-    dbRef.set(data).then(() => {
-        console.log("Neuron data saved successfully!");
-    }).catch((error) => {
-        console.error("Error saving neuron data:", error);
-    });
-}
+// function saveNeuronData(neuronId, data) {
+//     const dbRef = window.db.ref('neurons/' + neuronId);
+//     dbRef.set(data).then(() => {
+//         console.log("Neuron data saved successfully!");
+//     }).catch((error) => {
+//         console.error("Error saving neuron data:", error);
+//     });
+// }
 
 function setupNeuronListeners() {
     // Selects all neuron elements including input, hidden-layer, and output neurons
@@ -1129,7 +1135,7 @@ function setupNeuronListeners() {
 
         // Listeners for number inputs (large and small)
         neuron.querySelectorAll('input.number-box').forEach(input => {
-            input.addEventListener('input', function() {
+            input.addEventListener('input', function () {
                 const inputType = this.classList.contains('large') ? 'large' : 'small';
                 const inputValue = this.value.trim(); // Protect against empty strings
 
@@ -1166,7 +1172,7 @@ function setupNeuronListeners() {
 // Function to update neuron data in the database
 function updateNeuronData(neuronId, inputType, inputValue) {
     //const db = firebase.database();
-    const neuronRef = db.ref('neurons/' + neuronId);
+    const neuronRef = window.db.ref('neurons/' + neuronId);
 
     const updates = {};
 
@@ -1181,7 +1187,7 @@ function updateNeuronData(neuronId, inputType, inputValue) {
 
 function loadAllNeuronData() {
     //const db = firebase.database();
-    const neuronsRef = db.ref('neurons');
+    const neuronsRef = window.db.ref('neurons');
 
     neuronsRef.on('value', (snapshot) => {
         const data = snapshot.val();
@@ -1203,7 +1209,7 @@ function loadAllNeuronData() {
 
 function initializeNeuronDataInDB() {
     //const db = firebase.database();
-    console.log('Have db', db);
+    console.log('Have db', window.db);
 
     document.querySelectorAll('.circle').forEach(neuron => {
         const neuronId = neuron.getAttribute('data-id');
@@ -1219,7 +1225,7 @@ function initializeNeuronDataInDB() {
 
         // Set data in Firebase, overriding any existing data
         console.log('Accessing Firedb');
-        set(db.ref('neurons/' + neuronId), neuronData);
+        set(window.db.ref('neurons/' + neuronId), neuronData);
         console.log('Done accessing Firedb');
 
     });
@@ -1227,7 +1233,7 @@ function initializeNeuronDataInDB() {
 
 function updateScoreInDB(neuronId, newScore) {
     //const db = firebase.database();
-    const neuronRef = db.ref('neurons/' + neuronId);
+    const neuronRef = window.db.ref('neurons/' + neuronId);
     const maxScore = parseInt(document.getElementById('score-range-max').textContent);
     const fillPercentage = Math.min(100, (newScore / maxScore) * 100);
 
@@ -1247,37 +1253,37 @@ function updateScoreInDB(neuronId, newScore) {
 }
 
 
-function updateScoreAndFill(neuronId, newScore) {
-    const maxScore = parseInt(document.getElementById('score-range-max').textContent);
-    const fillPercentage = Math.min(100, (newScore / maxScore) * 100);
+// function updateScoreAndFill(neuronId, newScore) {
+//     const maxScore = parseInt(document.getElementById('score-range-max').textContent);
+//     const fillPercentage = Math.min(100, (newScore / maxScore) * 100);
 
-    const updates = {
-        score: newScore,
-        fill: fillPercentage
-    };
-    
-    console.log('Accessing Firedb');
+//     const updates = {
+//         score: newScore,
+//         fill: fillPercentage
+//     };
+
+//     console.log('Accessing Firedb');
 
 
-    const neuronRef = db.ref('neurons/' + neuronId);
-    set(neuronRef, updates); // Assuming you're using set to update the neuron data
-}
+//     const neuronRef = window.db.ref('neurons/' + neuronId);
+//     set(neuronRef, updates); // TO CHECK AND UPDATE
+// }
 
-function applyNeuronDataFromDB(neuronId, data) {
-    const neuronElement = document.querySelector(`.circle[data-id="${neuronId}"]`);
-    if (!neuronElement) {
-        console.error("Neuron with ID", neuronId, "not found");
-        return;
-    }
+// function applyNeuronDataFromDB(neuronId, data) {
+//     const neuronElement = document.querySelector(`.circle[data-id="${neuronId}"]`);
+//     if (!neuronElement) {
+//         console.error("Neuron with ID", neuronId, "not found");
+//         return;
+//     }
 
-    const scoreElement = neuronElement.querySelector('.score');
-    const fillElement = neuronElement.querySelector('.fill'); // Ensure this selector matches your fill element
+//     const scoreElement = neuronElement.querySelector('.score');
+//     const fillElement = neuronElement.querySelector('.fill'); // Ensure this selector matches your fill element
 
-    if (scoreElement && fillElement && data.fill !== undefined) {
-        scoreElement.textContent = data.score; // Update score text
-        fillElement.style.height = `${data.fill}%`; // Apply fill percentage from the database
-    }
-}
+//     if (scoreElement && fillElement && data.fill !== undefined) {
+//         scoreElement.textContent = data.score; // Update score text
+//         fillElement.style.height = `${data.fill}%`; // Apply fill percentage from the database
+//     }
+// }
 
 function checkAuthState() {
     const signInButton = document.getElementById('sign-in');
@@ -1285,7 +1291,7 @@ function checkAuthState() {
     const status = document.getElementById('sign-in-status');
     const mainContent = document.getElementById('main-content');
 
-    auth.onAuthStateChanged(user => {
+    window.auth.onAuthStateChanged(user => {
         if (user) {
             // User is signed in
             console.log("checkAuthState: User is signed in");
@@ -1308,7 +1314,7 @@ function checkAuthState() {
 function initializeFedCM() {
     if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
         google.accounts.id.initialize({
-            client_id: '786766490817-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',  // Ensure this is the correct client ID
+            client_id: '786766490817-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
             callback: handleCredentialResponse,
             use_fedcm_for_prompt: true // Enable FedCM
         });
@@ -1324,13 +1330,24 @@ function initializeFedCM() {
 
 function handleCredentialResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
-    // Here you can handle the credential, e.g., send it to your backend for verification
-} 
+    // handle the credential, send it to backend for verification
+}
 
 
-function toggleLinesVisibility(isVisible) {
-    const lines = document.querySelectorAll('.line');
-    lines.forEach(line => {
-        line.style.display = isVisible ? 'block' : 'none';
-    });
-}      
+// function toggleLinesVisibility(isVisible) {
+//     const lines = document.querySelectorAll('.line');
+//     lines.forEach(line => {
+//         line.style.display = isVisible ? 'block' : 'none';
+//     });
+// }  
+
+function setNeuronData(data) {
+    // TO BE ADDED
+}
+
+function set(value) {
+    // TO BE ADDED
+}
+
+console.log("apps-scripts loaded");
+

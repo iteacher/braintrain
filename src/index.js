@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
-import './styles/styles.css';
+import './js/config.js';
+import './js/firebaseInit.js';
+import './js/app-scripts.js';
 
-console.log("Doing index.js");
+console.log("index.js Headers and Imports loaded - React, Auth, firebase and app scripts ");
 
 // Google OneTapLogin
 const OneTapLogin = () => {
@@ -28,10 +30,7 @@ const App = () => (
     </GoogleOAuthProvider>
 );
 
-console.log("Done index.js P2");
-
-
 ReactDOM.render(<App />, document.getElementById('root'));
 
-console.log("Done index.js P1");
+console.log("index.js loaded");
 
