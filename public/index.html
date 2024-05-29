@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Neural Network Simulation App</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Julian Manders-Jones">
     <meta name="date" content="May 2024">
     <meta name="license" content="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">
-    <title>Neural Network Simulation App</title>
+
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://www.gstatic.com https://apis.google.com https://unpkg.com https://braintrain-3bf0f-default-rtdb.firebaseio.com https://*.firebaseio.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; connect-src 'self' https://accounts.google.com https://www.googleapis.com wss://*.firebaseio.com https://*.firebaseio.com https://www.gstatic.com; object-src 'none';">
+    <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
+
     <link rel="stylesheet" href="%PUBLIC_URL%/styles/styles.css">
     
-
     <!-- React and ReactDOM from CDN -->
     <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
@@ -20,8 +23,23 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
     
     <!-- Load Google Identity Services library -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-   
+    <script>
+        window.addEventListener('load', function() {
+            const script = document.createElement('script');
+            script.src = 'https://accounts.google.com/gsi/client';
+            script.async = true;
+            script.defer = true;
+            script.onload = function() {
+                console.log('Google Identity Services library loaded');
+                const gisLoadedEvent = new Event('gisLoaded');
+                document.dispatchEvent(gisLoadedEvent);
+            };
+            document.head.appendChild(script);
+        });
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/ui/6.0.2/firebase-ui-auth.js"></script>
+
 </head>
 <body>
     
@@ -35,7 +53,7 @@
         <button id="sign-out" style="display: none;">Sign Out</button>
     </div>
 
-    <div id="main-content" style="margin-top: 60px;">
+    <div id="main-content" style="margin-top: 20px;">
     
         <div class="header">
             <div class="header-label">INPUT LAYER</div>

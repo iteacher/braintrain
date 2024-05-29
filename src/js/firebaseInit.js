@@ -38,4 +38,50 @@ window.onload = function() {
   const firebaseReadyEvent = new Event('firebaseReady');
   document.dispatchEvent(firebaseReadyEvent);
 
+  // Add event listener for Google Identity Services
+  window.addEventListener('gisLoaded', function() {
+    window.google.accounts.id.initialize({
+      client_id: '786766490017-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
+      callback: handleCredentialResponse
+    });
+    window.google.accounts.id.prompt();
+  });
+
+  // Handle the credential response
+  function handleCredentialResponse(response) {
+    const credential = response.credential;
+    if (credential) {
+      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(credential))
+        .then(result => {
+          console.log("User signed in with One Tap:", result.user);
+          return result.user.getIdToken();
+        })
+        .then(token => {
+          console.log("Token retrieved successfully:", token);
+        })
+        .catch(error => {
+          console.error("Error during sign-in or token retrieval:", error);
+        });
+    } else {
+      console.log("No credential received or credential is invalid");
+    }
+  }
+
+  // Add a listener to check authentication state
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log("User is signed in");
+      user.getIdToken().then(token => {
+        console.log("Token retrieved successfully:", token);
+      }).catch(error => {
+        console.error("Error retrieving a token:", error);
+      });
+    } else {
+      console.log("No user is signed in");
+      // Do not attempt to retrieve a token
+    }
+  });
+
+  
+
 };

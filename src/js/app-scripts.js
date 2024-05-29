@@ -4,88 +4,66 @@
 import { applyConfig } from './config.js';
 import './firebaseInit.js';
 
+window.addEventListener('message', function(event) {
+    if (event.origin !== window.location.origin) {
+        // Ignore messages from unexpected origins for security
+        return;
+    }
+    if (event.data === 'popupClosed') {
+        console.log('The popup window has closed');
+        // Additional handling after the popup closes
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
-
     console.log("Page loaded");
 
-   // Listen for the custom 'firebaseReady' event
-   document.addEventListener('firebaseReady', function () {
-    console.log("Firebase is ready");
+    applyConfig(); // Apply cross-domain policies
+    
 
-        applyConfig(); // Apply cross-domain policies
+    document.addEventListener('firebaseReady', function () {
+        console.log("Firebase is ready");
 
+        const signInButton = document.getElementById('sign-in');
+        const signOutButton = document.getElementById('sign-out');
+        const status = document.getElementById('sign-in-status');
 
-        function setupGoogleSignIn() {
-            const signInButton = document.getElementById('sign-in');
-            const signOutButton = document.getElementById('sign-out');
-            const status = document.getElementById('sign-in-status');
+        const provider = new firebase.auth.GoogleAuthProvider();
 
-            // Ensure GoogleAuthProvider is accessed correctly
-            const provider = new firebase.auth.GoogleAuthProvider();
-
-            signInButton.addEventListener('click', () => {
-                console.log("Sing-in button clicked");
-
-                window.auth.signInWithPopup(provider)
-                    .then(result => {
-                        const user = result.user;
-                        console.log("Signed in as", user);
-
-                        status.textContent = `Signed in as ${user.displayName}`;
-                        signInButton.style.display = 'none';
-                        signOutButton.style.display = 'block';
-                        document.getElementById('main-content').style.display = 'block';
-                    })
-                    .catch(error => {
-                        console.error('Error signing in:', error);
-                        status.textContent = `Sign-in failed: ${error.message}`;
-                    });
+        signInButton.addEventListener('click', () => {
+            firebase.auth().signInWithPopup(provider)
+            .then(result => {
+                // Handle the sign-in result
+                window.addEventListener('beforeunload', function(event) {
+                    event.preventDefault();
+                    event.returnValue = ''; // This is necessary for Chrome to show the prompt
+                    if (window.opener) {
+                        window.opener.postMessage('popupClosed', window.opener.location.origin);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error signing in:', error.message, error.code);
+                alert('Failed to sign in. Please try again.');
             });
-
-            signOutButton.addEventListener('click', () => {
-                window.auth.signOut()
-                    .then(() => {
-                        status.textContent = 'Signed out';
-                        signInButton.style.display = 'block';
-                        signOutButton.style.display = 'none';
-                        document.getElementById('main-content').style.display = 'none';
-                    })
-                    .catch(error => {
-                        console.error('Error signing out:', error);
-                        status.textContent = `Sign-out failed: ${error.message}`;
-                    });
-            });
-        }
-
-        setupGoogleSignIn();
-
-        // Ensure Firebase is initialized before using it
-        if (typeof firebase === 'undefined') {
-            console.error('Firebase SDK not loaded');
-            return;
-        }
-
-        //const auth = firebase.auth();
-        //const database = firebase.database();
-        //const ref = window.db.ref;
-        //const update = window.db.update;
-
-        //const db = firebase.database();
-
-        window.addEventListener('load', function () {
-            console.log("****************INIT FEDCM***************");
-            try {
-                initializeFedCM();
-                console.log("****************COMPLETED FEDCM***************");
-            } catch (error) {
-                console.error("Error initializing FedCM:", error);
-            }
-
         });
 
+        signOutButton.addEventListener('click', () => {
+            firebase.auth().signOut()
+                .then(() => {
+                    status.textContent = 'Signed out';
+                    signInButton.style.display = 'block';
+                    signOutButton.style.display = 'none';
+                    document.getElementById('main-content').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error signing out:', error);
+                    status.textContent = `Sign-out failed: ${error.message}`;
+                });
 
-        console.log("SETTING setupInteractions");
+    });
+
+    console.log("SETTING setupInteractions");
         setupInteractions();
 
         console.log("SETTING UP drawPermanentLines");
@@ -138,11 +116,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
         console.log("****************FINISHED DOM LOAD***************");
     });
+    
+    document.addEventListener('gisLoaded', function () {
+        console.log("Google Identity Services library is ready");
+        try {
+            initializeFedCM();
+        } 
+        catch (error) {
+            console.error("Error initializing FedCM:", error);
+        }
+    });
+
+    if (!window.firebaseReady) {
+        //console.error('Firebase not ready.');
+    }
+
 });
 
 function setupInputListeners() {
 
     console.log("Setting up input listeners...");
+
     const inputs = document.querySelectorAll('.number-box');
     console.log(`Found ${inputs.length} input elements`);
 
