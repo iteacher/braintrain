@@ -30,6 +30,28 @@ document.addEventListener('DOMContentLoaded', function () {
         const signInButton = document.getElementById('sign-in');
         const signOutButton = document.getElementById('sign-out');
         const status = document.getElementById('sign-in-status');
+        const buttons = document.querySelectorAll('.toolbar button, .score-scale-container button');
+        const scoreRangeMax = document.getElementById('score-range-max');
+
+
+        const enableElements = () => {
+            buttons.forEach(button => {
+                button.classList.remove('disabled');
+                button.disabled = false;
+            });
+            scoreRangeMax.classList.remove('disabled');
+            scoreRangeMax.removeAttribute('disabled');
+        };
+        const disableElements = () => {
+            buttons.forEach(button => {
+                button.classList.add('disabled');
+                button.disabled = true;
+            });
+            scoreRangeMax.classList.add('disabled');
+            scoreRangeMax.setAttribute('disabled', 'disabled');
+        };
+        // Initial state - disable buttons
+        disableElements();
 
         const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -38,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(result => {
                 // Handle the sign-in result
                 hideWelcomePopup(); // Hide the welcome popup after successful login
+                enableElements(); // Enable elements after successful login
                 window.addEventListener('beforeunload', function(event) {
                     event.preventDefault();
                     event.returnValue = ''; // This is necessary for Chrome to show the prompt
@@ -60,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     signOutButton.style.display = 'none';
                     document.getElementById('main-content').style.display = 'none';
                     showWelcomePopup(); // Show the welcome popup after signing out
+                    disableElements(); // Disable elements after sign out
+
                 })
                 .catch(error => {
                     console.error('Error signing out:', error);

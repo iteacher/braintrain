@@ -33,7 +33,7 @@ html {
 .toolbar {
     display: flex;
     justify-content: space-between;
-    padding: 5px 20px;
+    padding: 0px 20px;
     align-items: center;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -64,7 +64,7 @@ input[type="password"] {
     /* Ensures the header fills the top part of the page */
 
     text-align: center;
-    padding: 10px 0;
+    padding: 3px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-around;
@@ -1002,4 +1002,56 @@ result-popup th,
     /* Aligning text to the left */
     font-size: 30px;
     padding-left: 0px;
+}
+
+#main-content {
+    flex: 1;
+}
+
+.page-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #FFFFFF; /* You can customize the background color */
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    padding: 0px 0; /* Add padding as needed */
+    text-align: center;
+}
+
+button.disabled {
+    background-color: grey; /* Greyed out background */
+    color: #666; /* Lighter text color */
+    cursor: not-allowed; /* Not-allowed cursor */
+    opacity: 0.3; /* Lower opacity */
+}
+
+label.disabled {
+    background-color: grey; /* Greyed out background */
+    color: #666; /* Lighter text color */
+    cursor: not-allowed; /* Not-allowed cursor */
+    opacity: 0.0; /* Lower opacity */
+}
+
+.popup-content {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    justify-content: flex-start; /* Align items to the start */
+}
+
+.popup-logo {
+    max-width: 100px; /* Adjust the size as needed */
+    height: auto;
+    margin-right: 20px; /* Space between logo and text */
+}
+
+.popup-text {
+    flex: 1; /* Allow the text to take up remaining space */
+}
+
+.popup-text h2 {
+    margin: 0 0 10px 0; /* Adjust margin for the heading */
+}
+
+.popup-text p {
+    margin: 0; /* Remove default margin */
 }

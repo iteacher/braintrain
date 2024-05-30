@@ -53,12 +53,19 @@
     </div>
 
     <div class="popup4">
-        <h2>Welcome to Braintrain!</h2>
-        <p>Braintrain is a neural network simulator to learn about neural networks.</p>     
-        <p><strong>Log in</strong> on the top right to participate.</p>
+        <div class="popup-content">
+            <img src="%PUBLIC_URL%/images/logo.png" alt="Braintrain Logo" class="popup-logo">
+            <div class="popup-text">
+                <h2>Welcome to Braintrain!</h2>
+                <p>Braintrain is a neural network simulator to learn about neural networks.</p>     
+                <p><strong>Log in</strong> on the top right to participate.</p>
+            </div>
+        </div>
     </div>
+    
+    
 
-    <div id="main-content" style="margin-top: 20px;">
+    <div id="main-content" style="margin-top: 10px;">
 
         <div class ="before-login">
             <div class="header">
@@ -227,42 +234,47 @@
             </div>
 
                 
-        </div>  <div class="toolbar">
-            <div class="button-container">
-                <button id="linkButton">Link</button>
-                <button id="reset">New Round</button>
-                <button id="add3">+3 Bonus</button>
-                <button id="add5">+5 Bonus</button>
-                <button id="reset-scores">Reset Scores</button>
-                <button id="reset-ticks">Reset Tickboxes</button>
-                <button id="save-game">Save</button>
-                <button id="load-game">Load</button>
-            </div>
-
-            <div id="resultPopup" class="result-popup">
-                <div class="popup-header">
-                    <span class="close-btn">&times;</span>
-                    <h2 id="highLowMessage"></h2>
-                </div>
-                <div class="popup-content">
-                    <!--<p id="highLowMessage" style="font-size: 18px;font-weight: bold; margin-top: 0; padding-top: 10px;"></p> -->
-                    <div id="resultsTableContainer"></div> <!-- Table will be dynamically inserted here -->
-                </div>
-                <div class="resize-handle"></div>
-            </div>
-            <div class="prediction">
-                <div class="score-scale-container">
-                    <button id="score-range-dec">-</button>
-                    <label id="score-range-max">30</label>
-                    <button id="score-range-inc">+</button>
-                </div>
-                <button name="compute" class="no-hide-on-click">Compute</button>
-            </div>
+           
+    </div>
+</div>  
+<div class="page-footer">
+    <div class="toolbar">
+        <div class="button-container">
+            <button id="linkButton" class="disabled" disabled>Link</button>
+            <button id="reset" class="disabled" disabled>New Round</button>
+            <button id="add3" class="disabled" disabled>+3 Bonus</button>
+            <button id="add5" class="disabled" disabled>+5 Bonus</button>
+            <button id="reset-scores" class="disabled" disabled>Reset Scores</button>
+            <button id="reset-ticks" class="disabled" disabled>Reset Tickboxes</button>
+            <button id="save-game" class="disabled" disabled>Save</button>
+            <button id="load-game" class="disabled" disabled>Load</button>
         </div>
 
-        <div class="footer">
-            <div class="footer-label">&copy; 2024 Neural Net Visualization  |  www.manders-jones.eu  |  <a href="%PUBLIC_URL%/terms_of_service.html">ToS</a>  |  <a href="%PUBLIC_URL%/public_privacy_policy.html">Privacy Policy</a>  |  Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</div>
-        </div>         
+        <div id="resultPopup" class="result-popup">
+            <div class="popup-header">
+                <span class="close-btn">&times;</span>
+                <h2 id="highLowMessage "></h2>
+            </div>
+            <div class="popup-content">
+                <!--<p id="highLowMessage" style="font-size: 18px;font-weight: bold; margin-top: 0; padding-top: 10px;"></p> -->
+                <div id="resultsTableContainer"></div> <!-- Table will be dynamically inserted here -->
+            </div>
+            <div class="resize-handle"></div>
+        </div>
+        <div class="prediction">
+            <div class="score-scale-container">
+                <button id="score-range-dec" class="disabled" disabled>-</button>
+                <label id="score-range-max" class="disabled" disabled>30</label>
+                <button id="score-range-inc" class="disabled" disabled>+</button>
+            </div>
+            <button name="compute" class="no-hide-on-click">Compute</button>
+        </div>
     </div>
+    <div class="footer">
+        <div class="footer-label">&copy; 2024 Neural Net Visualization v.1.9&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbspwww.manders-jones.eu&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp<a href="%PUBLIC_URL%/terms_of_service.html">ToS</a>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp<a href="%PUBLIC_URL%/public_privacy_policy.html">Privacy Policy</a>&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp<a href="https://github.com/iteacher/braintrain">Github Repository</a> CC BY-NC 4.0</div>
+    </div>  
+</div>
+
+    
 </body>
 </html>
