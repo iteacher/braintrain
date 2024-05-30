@@ -8,7 +8,7 @@
     <meta name="date" content="May 2024">
     <meta name="license" content="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://www.gstatic.com https://apis.google.com https://unpkg.com https://braintrain-3bf0f-default-rtdb.firebaseio.com https://*.firebaseio.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; connect-src 'self' https://accounts.google.com https://www.googleapis.com wss://*.firebaseio.com https://*.firebaseio.com https://www.gstatic.com; object-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://www.gstatic.com https://apis.google.com https://unpkg.com https://braintrain-3bf0f-default-rtdb.firebaseio.com https://*.firebaseio.com; style-src 'self' 'unsafe-inline' https://accounts.google.com https://fonts.googleapis.com; connect-src 'self' https://accounts.google.com https://www.googleapis.com wss://*.firebaseio.com https://*.firebaseio.com https://www.gstatic.com; object-src 'none';">
     <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
 
     <link rel="stylesheet" href="%PUBLIC_URL%/styles/styles.css">
@@ -42,7 +42,6 @@
 
 </head>
 <body>
-    
     <div id="root"></div>
  
     
@@ -53,173 +52,182 @@
         <button id="sign-out" style="display: none;">Sign Out</button>
     </div>
 
+    <div class="popup4">
+        <h2>Welcome to Braintrain!</h2>
+        <p>Braintrain is a neural network simulator to learn about neural networks.</p>     
+        <p><strong>Log in</strong> on the top right to participate.</p>
+    </div>
+
     <div id="main-content" style="margin-top: 20px;">
-    
-        <div class="header">
-            <div class="header-label">INPUT LAYER</div>
-            <div class="header-label">H1</div>
-            <div class="header-label">H2</div>
-            <div class="header-label">H3</div>
-            <div class="output-layer-header">OUTPUT LAYER</div>
-            <div class="settings-container">
-                <a id="settings-icon"></a>
-            </div>
-        </div>
-        <div class="container" id="mainContainer">
-            
-            <div class="popup">
-                <h2>Choose a number</h2>
-                <ul class="styled-list">
-                    <li>Any whole number between 0 and +100</li>
-                    <li>Tell us your number.</li>
-                </ul>
-            </div>
 
-            <div class="popup2">
-                <h2>Link and Adjust a number</h2>
-                <ul class="styled-list">
-                    <li>Link with a player to your left.</li>
-                    <li>Then adjust the whole number by -100 to +100.</li>
-                    <li>Tell us your number.</li>
-                </ul>
-            </div>
-
-            <div class="popup3">
-                <h2>Calculate average</h2>
-                <ul class="styled-list">
-                    <li>Average the numbers from the H3 layer.</li>
-                    <li>If the average is higher than the secret number, say “Too High!”.</li>
-                    <li>If the average is lower than the secret number, say “Too Low!”.</li>
-                    <li>Organize the network to tweak values and provide feedback.</li>
-                </ul>
-            </div>
-
-            <div class="popup1">
-                <h2>Choose a number</h2>
-                <ul class="styled-list">
-                    <li>Pick a secret number between -300 and +300 and write it on your whiteboard.</li>
-                    <li>Tell the secret number to the output neuron.</li>
-                    <li>Handle all the information that comes into the network.</li>
-                    <li>Control the software to present it to the class.</li>
-                </ul>
-            </div>
-
-            <div class="circle green" data-id="1">
-                <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                <div class="score-container">
-                    <div class="score-change" up-id="1">+</div>
-                    <label class="score" score-id="1">0</label>
-                    <div class="score-change" down-id="1">-</div>
-                    <div class="sparkle-container"></div>
-
+        <div class ="before-login">
+            <div class="header">
+                <div class="header-label">INPUT LAYER</div>
+                <div class="header-label">H1</div>
+                <div class="header-label">H2</div>
+                <div class="header-label">H3</div>
+                <div class="output-layer-header">OUTPUT LAYER</div>
+                <div class="settings-container">
+                    <a id="settings-icon"></a>
                 </div>
-                <input type="text" class="number-box small" value="LAYLA + HEIDI">
-                <form>
-                    <input type="password" class="secret-box large" id="predictionInput" name="prediction" autocomplete="0">
-                </form>
-                <input type="checkbox" class="checkbox" checkid="2">
             </div>
+            
+            <div class="container" id="mainContainer">
+                
+                <div class="popup">
+                    <h2>Choose a number</h2>
+                    <ul class="styled-list">
+                        <li>Any whole number between 0 and +100</li>
+                        <li>Tell us your number.</li>
+                    </ul>
+                </div>
 
-            <div class="grid">
-                <div class="circle hidden-layer" data-id="2">
+                <div class="popup2">
+                    <h2>Link and Adjust a number</h2>
+                    <ul class="styled-list">
+                        <li>Link with a player to your left.</li>
+                        <li>Then adjust the whole number by -100 to +100.</li>
+                        <li>Tell us your number.</li>
+                    </ul>
+                </div>
+
+                <div class="popup3">
+                    <h2>Calculate average</h2>
+                    <ul class="styled-list">
+                        <li>Average the numbers from the H3 layer.</li>
+                        <li>If the average is higher than the secret number, say “Too High!”.</li>
+                        <li>If the average is lower than the secret number, say “Too Low!”.</li>
+                        <li>Organize the network to tweak values and provide feedback.</li>
+                    </ul>
+                </div>
+
+                <div class="popup1">
+                    <h2>Choose a number</h2>
+                    <ul class="styled-list">
+                        <li>Pick a secret number between -300 and +300 and write it on your whiteboard.</li>
+                        <li>Tell the secret number to the output neuron.</li>
+                        <li>Handle all the information that comes into the network.</li>
+                        <li>Control the software to present it to the class.</li>
+                    </ul>
+                </div>
+
+                <div class="circle green" data-id="1">
                     <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
                     <div class="score-container">
-                        <div class="score-change" up-id="2">+</div>
-                        <label class="score" score-id="2">0</label>
-                        <div class="score-change" down-id="2">-</div>
+                        <div class="score-change" up-id="1">+</div>
+                        <label class="score" score-id="1">0</label>
+                        <div class="score-change" down-id="1">-</div>
+                        <div class="sparkle-container"></div>
+
                     </div>
-                    <input type="text" class="number-box small" value="DIYA + LAILA N.">
+                    <input type="text" class="number-box small" value="LAYLA + HEIDI">
+                    <form>
+                        <input type="password" class="secret-box large" id="predictionInput" name="prediction" autocomplete="0">
+                    </form>
+                    <input type="checkbox" class="checkbox" checkid="2">
+                </div>
+
+                <div class="grid">
+                    <div class="circle hidden-layer" data-id="2">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="2">+</div>
+                            <label class="score" score-id="2">0</label>
+                            <div class="score-change" down-id="2">-</div>
+                        </div>
+                        <input type="text" class="number-box small" value="DIYA + LAILA N.">
+                        <input type="text" class="number-box large">
+                        <input type="checkbox" class="checkbox" checkid="2">
+                    </div>
+                    <div class="circle hidden-layer" data-id="3">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="3">+</div>
+                            <label class="score" score-id="3">0</label>
+                            <div class="score-change" down-id="3">-</div>
+                        </div><input type="text" class="number-box small" value="MYA + MARYAM"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="3">
+                    </div>
+                    <div class="circle hidden-layer" data-id="4">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="4">+</div>
+                            <label class="score" score-id="4">0</label>
+                            <div class="score-change" down-id="4">-</div>
+                        </div><input type="text" class="number-box small" value="LAILA + AILIE"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="4">
+                    </div>
+                    <div class="circle hidden-layer" data-id="5">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="5">+</div>
+                            <label class="score" score-id="5">0</label>
+                            <div class="score-change" down-id="5">-</div>
+                        </div><input type="text" class="number-box small" value="ELLYN"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="5">
+                    </div>
+                    <div class="circle hidden-layer" data-id="6">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="6">+</div>
+                            <label class="score" score-id="6">0</label>
+                            <div class="score-change" down-id="6">-</div>
+                        </div><input type="text" class="number-box small" value="CAYELIN"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="6">
+                    </div>
+                    <div class="circle hidden-layer" data-id="7">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="7">+</div>
+                            <label class="score" score-id="7">0</label>
+                            <div class="score-change" down-id="7">-</div>
+                        </div><input type="text" class="number-box small" value="CASSIA"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="7">
+                    </div>
+                    <div class="circle hidden-layer" data-id="8">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="8">+</div>
+                            <label class="score" score-id="8">0</label>
+                            <div class="score-change" down-id="8">-</div>
+                        </div><input type="text" class="number-box small" value="KHUSHMEET"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="8">
+                    </div>
+                    <div class="circle hidden-layer" data-id="9">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="9">+</div>
+                            <label class="score" score-id="9">0</label>
+                            <div class="score-change" down-id="9">-</div>
+                        </div><input type="text" class="number-box small" value="MEGAN"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="9">
+                    </div>
+                    <div class="circle hidden-layer" data-id="10">
+                        <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                        <div class="score-container">
+                            <div class="score-change" up-id="10">+</div>
+                            <label class="score" score-id="10">0</label>
+                            <div class="score-change" down-id="10">-</div>
+                        </div><input type="text" class="number-box small" value="FRAN"><input type="text"
+                            class="number-box large"><input type="checkbox" class="checkbox" checkid="10">
+                    </div>
+                </div>
+
+                <div class="circle green" data-id="11">
+                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
+                    <div class="score-container">
+                        <div class="score-change" up-id="11">+</div>
+                        <label class="score" score-id="11">0</label>
+                        <div class="score-change" down-id="11">-</div>
+                    </div>
+                    <input type="text" class="number-box small" value="LILY + NOOR">
                     <input type="text" class="number-box large">
                     <input type="checkbox" class="checkbox" checkid="2">
                 </div>
-                <div class="circle hidden-layer" data-id="3">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="3">+</div>
-                        <label class="score" score-id="3">0</label>
-                        <div class="score-change" down-id="3">-</div>
-                    </div><input type="text" class="number-box small" value="MYA + MARYAM"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="3">
-                </div>
-                <div class="circle hidden-layer" data-id="4">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="4">+</div>
-                        <label class="score" score-id="4">0</label>
-                        <div class="score-change" down-id="4">-</div>
-                    </div><input type="text" class="number-box small" value="LAILA + AILIE"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="4">
-                </div>
-                <div class="circle hidden-layer" data-id="5">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="5">+</div>
-                        <label class="score" score-id="5">0</label>
-                        <div class="score-change" down-id="5">-</div>
-                    </div><input type="text" class="number-box small" value="ELLYN"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="5">
-                </div>
-                <div class="circle hidden-layer" data-id="6">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="6">+</div>
-                        <label class="score" score-id="6">0</label>
-                        <div class="score-change" down-id="6">-</div>
-                    </div><input type="text" class="number-box small" value="CAYELIN"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="6">
-                </div>
-                <div class="circle hidden-layer" data-id="7">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="7">+</div>
-                        <label class="score" score-id="7">0</label>
-                        <div class="score-change" down-id="7">-</div>
-                    </div><input type="text" class="number-box small" value="CASSIA"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="7">
-                </div>
-                <div class="circle hidden-layer" data-id="8">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="8">+</div>
-                        <label class="score" score-id="8">0</label>
-                        <div class="score-change" down-id="8">-</div>
-                    </div><input type="text" class="number-box small" value="KHUSHMEET"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="8">
-                </div>
-                <div class="circle hidden-layer" data-id="9">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="9">+</div>
-                        <label class="score" score-id="9">0</label>
-                        <div class="score-change" down-id="9">-</div>
-                    </div><input type="text" class="number-box small" value="MEGAN"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="9">
-                </div>
-                <div class="circle hidden-layer" data-id="10">
-                    <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                    <div class="score-container">
-                        <div class="score-change" up-id="10">+</div>
-                        <label class="score" score-id="10">0</label>
-                        <div class="score-change" down-id="10">-</div>
-                    </div><input type="text" class="number-box small" value="FRAN"><input type="text"
-                        class="number-box large"><input type="checkbox" class="checkbox" checkid="10">
-                </div>
             </div>
 
-            <div class="circle green" data-id="11">
-                <div class="fill" id="fill" style="height: 0%;"></div> <!-- Add this line -->
-                <div class="score-container">
-                    <div class="score-change" up-id="11">+</div>
-                    <label class="score" score-id="11">0</label>
-                    <div class="score-change" down-id="11">-</div>
-                </div>
-                <input type="text" class="number-box small" value="LILY + NOOR">
-                <input type="text" class="number-box large">
-                <input type="checkbox" class="checkbox" checkid="2">
-            </div>
-        </div>
-
-        <div class="toolbar">
+                
+        </div>  <div class="toolbar">
             <div class="button-container">
                 <button id="linkButton">Link</button>
                 <button id="reset">New Round</button>
@@ -252,11 +260,9 @@
             </div>
         </div>
 
-        
         <div class="footer">
-        <div class="footer-label">&copy; 2024 Neural Net Visualization  |  www.manders-jones.eu  |  <a href="%PUBLIC_URL%/terms_of_service.html">ToS</a>  |  <a href="%PUBLIC_URL%/public_privacy_policy.html">Privacy Policy</a>  |  Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</div>
-        </div>
+            <div class="footer-label">&copy; 2024 Neural Net Visualization  |  www.manders-jones.eu  |  <a href="%PUBLIC_URL%/terms_of_service.html">ToS</a>  |  <a href="%PUBLIC_URL%/public_privacy_policy.html">Privacy Policy</a>  |  Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)</div>
+        </div>         
     </div>
-    
 </body>
 </html>

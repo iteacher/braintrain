@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     applyConfig(); // Apply cross-domain policies
     
+    showWelcomePopup(); // Show the welcome popup on page load
+    console.log("Showing welcome popup");
+
 
     document.addEventListener('firebaseReady', function () {
         console.log("Firebase is ready");
@@ -34,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             firebase.auth().signInWithPopup(provider)
             .then(result => {
                 // Handle the sign-in result
+                hideWelcomePopup(); // Hide the welcome popup after successful login
                 window.addEventListener('beforeunload', function(event) {
                     event.preventDefault();
                     event.returnValue = ''; // This is necessary for Chrome to show the prompt
@@ -55,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     signInButton.style.display = 'block';
                     signOutButton.style.display = 'none';
                     document.getElementById('main-content').style.display = 'none';
+                    showWelcomePopup(); // Show the welcome popup after signing out
                 })
                 .catch(error => {
                     console.error('Error signing out:', error);
@@ -1342,6 +1347,33 @@ function setNeuronData(data) {
 function set(value) {
     // TO BE ADDED
 }
+
+function showWelcomePopup() {
+    const welcomePopup = document.querySelector('.popup4');
+    const mainContent = document.getElementById('main-content');
+    if (welcomePopup && mainContent) {
+        mainContent.style.display = 'block'; // Ensure main-content is visible
+        console.log("Showing welcome popup");
+        welcomePopup.style.setProperty('display', 'block', 'important');
+        welcomePopup.style.setProperty('opacity', '1', 'important');
+        welcomePopup.style.setProperty('transform', 'translateY(0px) scale(1)', 'important');
+    }
+}
+
+function hideWelcomePopup() {
+    const welcomePopup = document.querySelector('.popup4');
+    if (welcomePopup) {
+        welcomePopup.style.animation = 'fadeOutScaleDown 0.5s forwards';
+        welcomePopup.addEventListener('animationend', function () {
+            welcomePopup.style.setProperty('display', 'none', 'important');
+            welcomePopup.style.setProperty('opacity', '0', 'important');
+            welcomePopup.style.setProperty('transform', 'translateY(-10px) scale(0.95)', 'important');
+        }, { once: true });
+    }
+}
+
+
+
 
 console.log("apps-scripts loaded");
 
