@@ -992,7 +992,7 @@ result-popup th,
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
     transform: translateY(-10px) scale(1) !important;
     color: #333 !important;
-    font-size: 18px !important;
+    font-size: 26px !important;
     text-align: left !important;
 }
 
@@ -1000,7 +1000,7 @@ result-popup th,
     /* Aligning text to the left */
     text-align: left;
     /* Aligning text to the left */
-    font-size: 30px;
+    font-size: 40px;
     padding-left: 0px;
 }
 
