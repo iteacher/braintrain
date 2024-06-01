@@ -980,7 +980,7 @@ result-popup th,
     position: absolute !important;
     top: 100px !important;
     left: 50px !important;
-    width: 700px !important;
+    width: 850px !important;
     padding: 20px !important;
     background: #DBE9F4 !important;
     border: 2px solid #BDBDBD !important;
@@ -1039,7 +1039,7 @@ label.disabled {
 }
 
 .popup-logo {
-    max-width: 100px; /* Adjust the size as needed */
+    max-width: 300px; /* Adjust the size as needed */
     height: auto;
     margin-right: 20px; /* Space between logo and text */
 }
