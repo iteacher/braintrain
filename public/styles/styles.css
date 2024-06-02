@@ -53,6 +53,9 @@ body::before {
     /* White for a clean, modern appearance */
     color: #333;
     /* Dark text for contrast */
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    border-top: 1px solid #484848; /* Cool green border effect */
+    border-radius: 0 0 5px 5px; /* Round the bottom corners */
 }
 
 input[type="text"],
@@ -65,7 +68,22 @@ input[type="password"] {
     /* Higher than the fill */
 }
 
-.header,
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #333 !important;
+    color: #333;
+    z-index: 500;
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    border-bottom: 1px solid #484848; /* Cool green border effect */
+    border-radius: 0 0 5px 5px; /* Round the bottom corners */
+}
+
 .footer {
     position: relative;
     /* Necessary for positioning the absolute element */
@@ -84,6 +102,8 @@ input[type="password"] {
     /* Dark text for contrast */
     z-index: 500;
     /* Ensure this is less than the settings icon if needed */
+    /* Maintain z-index for stacking context */
+ 
 }
 
 .header-label {
