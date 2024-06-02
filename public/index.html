@@ -54,24 +54,30 @@
 
     <div class="popup4">
         <div class="popup-content">
-                <img src="%PUBLIC_URL%/images/logo.png" alt="Braintrain Logo" class="popup-logo" width="500">            
-                <div class="popup-text">
-                    <h2>Welcome to Braintrain!</h2>
-                    <p>Braintrain is a neural network simulator to learn about neural networks.</p>     
-                    <br>
-                    <p>An initial getting started game concept is posted here, to explore a guess the number game: </p>
-                    <p><a href="%PUBLIC_URL%/game_rules.html">Neural Network Game Instructions</a></p>
-                    <br> 
-                    <p>Beyond these initial rules and concepts, this neural network simulator can be used to demonstrate a function approximator for any function.</p>
-                    <br><br>
-                    <p><strong>Log in</strong> on the top right to explore the features of a neural network.  Login is provided to sync neuron values for multiple users in real-time.  Login is required to provide real-time collaboration with other users who are using the sim.</p>
-                 </div>
+            <img src="%PUBLIC_URL%/images/logo.png" alt="Braintrain Logo" class="popup-logo">
+            <div class="popup-text">
+                <h2>Welcome to Braintrain!</h2>
+                <p>Braintrain is a neural network simulator to learn about neural networks.</p>
+                <p>To learn how to start with a simple 'Guess the Number Game':</p>
+                <p><a href="%PUBLIC_URL%/game_rules.html">Getting Started Instructions</a></p>
+                <p>Beyond these initial rules and concepts, this neural network simulator can be used to demonstrate simplified function approximator for any function.</p>
+                <h3>Login for Multi-user Collaboration</h3>
+                <ul class="styled-list">
+                    <li><strong>Log in</strong> to use realtime sync with other users.</li>
+                    <li>Log in is optional, if you do not wish to sync in realtime with other users.</li>
+                    <li>Login will collect your username and email address to sync neuron values for multiple users in real-time.</li>
+                    <li>User info and email addresses are not shown to other users.</li>
+                </ul>
+                <button id="close-popup4" class="close-btn">Play without login</button>
+            </div>
         </div>
     </div>
     
     
+    
+    
 
-    <div id="main-content" style="margin-top: 10px;">
+    <div id="main-content" style="margin-top: 20px;">
 
         <div class ="before-login">
             <div class="header">

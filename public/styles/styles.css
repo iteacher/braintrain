@@ -203,12 +203,14 @@ input[type="password"] {
 
 .line {
     position: absolute;
-    background-color: #086B10;
+    background-color: #000000 !important;
     /* A vibrant green that stands out nicely */
     z-index: 1;
     pointer-events: none;
     height: 6px;
     /* Increased thickness */
+    display: block; /* Ensure it is visible by default */
+
 }
 
 .circle.green,
@@ -976,36 +978,11 @@ result-popup th,
     background-color: #f44336; /* Different color for the sign-out button */
 }
 
-.popup4 {
-    position: absolute !important;
-    top: 100px !important;
-    left: 50px !important;
-    width: 850px !important;
-    padding: 20px !important;
-    background: #DBE9F4 !important;
-    border: 2px solid #BDBDBD !important;
-    border-radius: 10px !important;
-    display: none !important; /* Initially hidden */
-    z-index: 3000 !important;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important;
-    opacity: 0 !important;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
-    transform: translateY(-10px) scale(1) !important;
-    color: #333 !important;
-    font-size: 26px !important;
-    text-align: left !important;
-}
-
-.popup4 h2 {
-    /* Aligning text to the left */
-    text-align: left;
-    /* Aligning text to the left */
-    font-size: 40px;
-    padding-left: 0px;
-}
 
 #main-content {
     flex: 1;
+    display: block; /* Ensure it is visible by default */
+
 }
 
 .page-footer {
@@ -1031,15 +1008,60 @@ label.disabled {
     cursor: not-allowed; /* Not-allowed cursor */
     opacity: 0.0; /* Lower opacity */
 }
+.popup4 {
+    position: absolute !important;
+    top: 18% !important; /* Centered vertically */
+    left: 2% !important; /* Centered horizontally */
+    transform: translate(-50%, -20%) !important; /* Centering adjustment */
+    width: 80% !important; /* Responsive width */
+    max-width: 900px !important; /* Maximum width */
+    padding: 20px !important;
+    background: #f7f9fb !important; /* Softer background color */
+    border: 2px solid #BDBDBD !important;
+    border-radius: 10px !important;
+    display: none !important; /* Initially hidden */
+    z-index: 3000 !important;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important; /* Subtle shadow for depth */
+    opacity: 0 !important;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out !important;
+    color: #333 !important;
+    font-size: 18px !important; /* Consistent font size */
+    text-align: left !important;
+}
+
+.popup4 h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.popup4 h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.popup4 p {
+    line-height: 1.5;
+    margin: 5px 0;
+}
+
+.popup4 a {
+    color: #007BFF; /* Standard link color */
+    text-decoration: none;
+}
+
+.popup4 a:hover {
+    text-decoration: underline;
+}
 
 .popup-content {
     display: flex;
-    align-items: center; /* Vertically align items */
+    align-items: flex-start; /* Align items to the start */
     justify-content: flex-start; /* Align items to the start */
 }
 
 .popup-logo {
-    max-width: 300px; /* Adjust the size as needed */
+    max-width: 200px; /* Adjust the size as needed */
     height: auto;
     margin-right: 20px; /* Space between logo and text */
 }
@@ -1048,10 +1070,43 @@ label.disabled {
     flex: 1; /* Allow the text to take up remaining space */
 }
 
-.popup-text h2 {
-    margin: 0 0 10px 0; /* Adjust margin for the heading */
+.styled-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0;
+    margin: 10px 0;
 }
 
-.popup-text p {
-    margin: 0; /* Remove default margin */
+.styled-list li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.styled-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: url('../images/bullet.png') no-repeat center center;
+    background-size: contain;
+}
+
+.close-btn {
+    display: block;
+    margin: 20px auto 0 auto; /* Center button horizontally */
+    background-color: #4CAF50; /* Consistent button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px; /* Consistent font size */
+    text-align: center;
+}
+
+.close-btn:hover {
+    background-color: #388E3C; /* Darker green on hover */
 }

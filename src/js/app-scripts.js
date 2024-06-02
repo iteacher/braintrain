@@ -4,6 +4,11 @@
 import { applyConfig } from './config.js';
 import './firebaseInit.js';
 
+let show_main_content = true; // Change to false to hide content
+let isAuthenticated = false; // Track authentication state
+
+
+
 window.addEventListener('message', function(event) {
     if (event.origin !== window.location.origin) {
         // Ignore messages from unexpected origins for security
@@ -23,6 +28,30 @@ document.addEventListener('DOMContentLoaded', function () {
     showWelcomePopup(); // Show the welcome popup on page load
     console.log("Showing welcome popup");
 
+    // Close button for popup4
+    const closePopup4Button = document.getElementById('close-popup4');
+    if (closePopup4Button) {
+        closePopup4Button.addEventListener('click', function () {
+            hideWelcomePopup(); // Use the existing function to hide the popup
+        });
+    }
+
+
+    const mainContent = document.getElementById('main-content');
+
+    function updateMainContentVisibility() {
+        const mainContent = document.getElementById('main-content');
+        if (show_main_content) {
+            mainContent.style.display = 'block';
+            drawPermanentLines(); // Ensure lines are drawn when content is visible
+        } else {
+            mainContent.style.display = 'none';
+        }
+    }
+    
+    // Initial call to set visibility based on the global variable
+    updateMainContentVisibility();
+
 
     document.addEventListener('firebaseReady', function () {
         console.log("Firebase is ready");
@@ -41,14 +70,21 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             scoreRangeMax.classList.remove('disabled');
             scoreRangeMax.removeAttribute('disabled');
+            document.querySelectorAll('.number-box.small').forEach(input => {
+                input.disabled = false;
+            });
         };
         const disableElements = () => {
             buttons.forEach(button => {
                 button.classList.add('disabled');
                 button.disabled = true;
+
             });
             scoreRangeMax.classList.add('disabled');
             scoreRangeMax.setAttribute('disabled', 'disabled');
+            document.querySelectorAll('.number-box.small').forEach(input => {
+                input.disabled = true;
+            });
         };
         // Initial state - disable buttons
         disableElements();
@@ -59,8 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
             firebase.auth().signInWithPopup(provider)
             .then(result => {
                 // Handle the sign-in result
+
                 hideWelcomePopup(); // Hide the welcome popup after successful login
                 enableElements(); // Enable elements after successful login
+                isAuthenticated = true; // Set authenticated to true
+
                 window.addEventListener('beforeunload', function(event) {
                     event.preventDefault();
                     event.returnValue = ''; // This is necessary for Chrome to show the prompt
@@ -81,9 +120,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     status.textContent = 'Signed out';
                     signInButton.style.display = 'block';
                     signOutButton.style.display = 'none';
-                    document.getElementById('main-content').style.display = 'none';
+                    mainContent.style.display = 'none';
                     showWelcomePopup(); // Show the welcome popup after signing out
                     disableElements(); // Disable elements after sign out
+                    isAuthenticated = false; // Set authenticated to false
+
 
                 })
                 .catch(error => {
@@ -173,9 +214,11 @@ function setupInputListeners() {
     inputs.forEach(input => {
         console.log(`Setting listener for input: ${input.name || input.id}`);
         input.addEventListener('input', function () {
-            console.log(`Input changed for ${this.name || this.id}:`, this.value);
-            // Call your update function here
-            handleNeuronUpdate(this.dataset.neuronId);
+            if (isAuthenticated) {
+                handleNeuronUpdate(this.dataset.neuronId);
+            } else {
+                updateNeuronFills(); // Ensure fill updates after input changes
+            }        
         });
     });
 
@@ -241,21 +284,25 @@ function setupInputListeners() {
             });
         }
 
-        displayResults(); // Call this function to display results after computation
+        if (isAuthenticated) {
+            displayResults();
+        }
     });
 
 
     document.querySelectorAll('.score').forEach(scoreElement => {
         scoreElement.addEventListener('input', function () {
-            const neuronId = this.closest('.circle').getAttribute('data-id');
-            const scoreValue = parseInt(this.textContent) || 0; // Assuming the score is an integer
-            updateScoreInDB(neuronId, scoreValue);
+            if (isAuthenticated) {
+                const neuronId = this.closest('.circle').getAttribute('data-id');
+                const scoreValue = parseInt(this.textContent) || 0;
+                updateScoreInDB(neuronId, scoreValue);
+            }
         });
     });
 
 
     document.getElementById('reset-scores').addEventListener('click', function () {
-        if (window.confirm('Are you sure you want to reset all scores?\nThis action cannot be undone.')) {
+        if (isAuthenticated && window.confirm('Are you sure you want to reset all scores?\nThis action cannot be undone.')) {
             const neurons = Array.from(document.querySelectorAll('.circle')); // Convert NodeList to an array
             //const db = firebase.database();
 
@@ -548,6 +595,10 @@ function drawPermanentLines() {
     outputTargetNeurons.forEach(circle => {
         drawLineBetweenCircles(outputGreenCircle, circle, `${outputGreenCircle.dataset.id}-${circle.dataset.id}`);
     });
+
+    document.querySelectorAll('.line').forEach(line => {
+        line.style.display = 'block';
+    });
 }
 
 function drawLineBetweenCircles(circle1, circle2, pairId) {
@@ -574,9 +625,7 @@ function drawLineBetweenCircles(circle1, circle2, pairId) {
 
     document.body.appendChild(line); // Append line to a visible container
 
-    // Ensure the line is hidden if not logged in
-    const isAuthenticated = !!window.auth.currentUser;
-    line.style.display = isAuthenticated ? 'block' : 'none';
+    line.style.display = 'block';
 
     updateLinkButton(); // Ensure button text updates after drawing a new line
 }
@@ -625,32 +674,34 @@ function setupScoreChangeListeners() {
     const increaseButtons = document.querySelectorAll('.score-change[up-id]');
     const decreaseButtons = document.querySelectorAll('.score-change[down-id]');
 
-    // Increment the score
     increaseButtons.forEach(button => {
         button.addEventListener('click', function () {
             const scoreId = this.getAttribute('up-id');
             const scoreElement = document.querySelector(`.score[score-id="${scoreId}"]`);
-
             if (scoreElement) {
                 let currentScore = parseInt(scoreElement.textContent) || 0;
                 currentScore += 1;
                 scoreElement.textContent = currentScore;
-                updateScoreInDB(scoreId, currentScore);
+                if (isAuthenticated) {
+                    updateScoreInDB(scoreId, currentScore);
+                }
+                updateNeuronFills(); // Ensure fill updates after score changes
             }
         });
     });
 
-    // Decrement the score
     decreaseButtons.forEach(button => {
         button.addEventListener('click', function () {
             const scoreId = this.getAttribute('down-id');
             const scoreElement = document.querySelector(`.score[score-id="${scoreId}"]`);
-
             if (scoreElement) {
                 let currentScore = parseInt(scoreElement.textContent) || 0;
                 currentScore -= 1;
                 scoreElement.textContent = currentScore;
-                updateScoreInDB(scoreId, currentScore);
+                if (isAuthenticated) {
+                    updateScoreInDB(scoreId, currentScore);
+                }
+                updateNeuronFills(); // Ensure fill updates after score changes
             }
         });
     });
@@ -1069,9 +1120,13 @@ function handleNeuronUpdate(neuronId) {
         const numberBoxSmallElement = neuronElement.querySelector('.number-box.small');
         const numberBoxLargeElement = neuronElement.querySelector('.number-box.large');
 
-        // Check if the score element is 'contenteditable' or a similar non-input element
         if (labelScoreElement) {
-            const updateScore = () => setNeuronData(neuronId, 'labelScore', labelScoreElement.textContent || labelScoreElement.value);
+            const updateScore = () => {
+                if (isAuthenticated) {
+                    setNeuronData(neuronId, 'labelScore', labelScoreElement.textContent || labelScoreElement.value);
+                }
+                updateNeuronFills(); // Ensure fill updates after score changes
+            };
             if (labelScoreElement.isContentEditable) {
                 labelScoreElement.addEventListener('input', updateScore);
             } else {
@@ -1080,14 +1135,21 @@ function handleNeuronUpdate(neuronId) {
         }
 
         if (numberBoxSmallElement) {
+            numberBoxSmallElement.disabled = !isAuthenticated;
             numberBoxSmallElement.addEventListener('input', () => {
-                setNeuronData(neuronId, 'small', numberBoxSmallElement.value);
+                if (isAuthenticated) {
+                    setNeuronData(neuronId, 'small', numberBoxSmallElement.value);
+                }
+                updateNeuronFills(); // Ensure fill updates after small box changes
             });
         }
 
         if (numberBoxLargeElement) {
             numberBoxLargeElement.addEventListener('input', () => {
-                setNeuronData(neuronId, 'large', numberBoxLargeElement.value);
+                if (isAuthenticated) {
+                    setNeuronData(neuronId, 'large', numberBoxLargeElement.value);
+                }
+                updateNeuronFills(); // Ensure fill updates after large box changes
             });
         }
     } else {
@@ -1195,18 +1257,24 @@ function setupNeuronListeners() {
 
 // Function to update neuron data in the database
 function updateNeuronData(neuronId, inputType, inputValue) {
-    //const db = firebase.database();
+    if (!isAuthenticated) {
+        console.warn(`Update skipped for neuron ${neuronId} due to authentication status`);
+        return;
+    }
+
     const neuronRef = window.db.ref('neurons/' + neuronId);
 
     const updates = {};
-
-    // Build the updates object dynamically based on the input type and value
     updates[inputType] = inputValue;
 
-    // Perform the update
     neuronRef.update(updates)
-        .then(() => console.log('Data updated successfully for neuron:', neuronId))
-        .catch((error) => console.error('Failed to update data for neuron:', neuronId, error));
+        .then(() => {
+            console.log('Data updated successfully for neuron:', neuronId);
+            updateNeuronFills(); // Ensure fill updates after data changes
+        })
+        .catch((error) => {
+            console.error('Failed to update data for neuron:', neuronId, error);
+        });
 }
 
 function loadAllNeuronData() {
@@ -1256,7 +1324,11 @@ function initializeNeuronDataInDB() {
 }
 
 function updateScoreInDB(neuronId, newScore) {
-    //const db = firebase.database();
+    if (!isAuthenticated) {
+        console.warn(`Score update skipped for neuron ${neuronId} due to authentication status`);
+        return;
+    }
+
     const neuronRef = window.db.ref('neurons/' + neuronId);
     const maxScore = parseInt(document.getElementById('score-range-max').textContent);
     const fillPercentage = Math.min(100, (newScore / maxScore) * 100);
@@ -1323,12 +1395,18 @@ function checkAuthState() {
             signInButton.style.display = 'none';
             signOutButton.style.display = 'block';
             mainContent.style.display = 'block';
+            drawPermanentLines(); // Draw lines when user is signed in
+
         } else {
             // User is signed out
             status.textContent = 'Signed out';
             signInButton.style.display = 'block';
             signOutButton.style.display = 'none';
-            mainContent.style.display = 'none';
+            if (!show_main_content) {
+                mainContent.style.display = 'none';
+            } else {
+                drawPermanentLines(); // Draw lines for testing when not signed in
+            }
             console.log("checkAuthState: User is signed out");
         }
     });
