@@ -709,11 +709,7 @@ button:hover {
     margin: 0;
 }
 
-.popup-content {
-    padding: 5px;
-    font-size: 12px;
 
-}
 
 .resize-handle {
     position: absolute;
@@ -1060,6 +1056,9 @@ label.disabled {
 .popup4 h2 {
     font-size: 36px;
     margin-bottom: 10px;
+    padding: 0px !important;
+
+    
 }
 
 .popup4 h3 {
@@ -1086,16 +1085,49 @@ label.disabled {
     display: flex;
     align-items: flex-start; /* Align items to the start */
     justify-content: flex-start; /* Align items to the start */
+    margin-top: 0px !important; /* Space between logo and text */
+
 }
 
 .popup-logo {
-    max-width: 200px; /* Adjust the size as needed */
-    height: auto;
-    margin-right: 20px; /* Space between logo and text */
+    width: 200px !important; /* Set the width of the container */
+    height: auto !important;
+    margin-right: 20px !important; /* Space between logo and text */
+    display: flex !important;
+    flex-direction: column !important; /* Align items in a column */
+    align-items: center !important; /* Center items horizontally */
 }
+
+.popup-logo img.logo {
+    width: 100% !important; /* Ensure logo scales correctly within the container */
+    height: auto !important; /* Maintain aspect ratio */
+    max-width: 200px !important; /* Maximum width for the logo */
+    margin-top: 10px;
+}
+
+.popup-logo img.qr-code {
+    margin-top: 10px !important; /* Add some space between the logo and QR code */
+    width: 100% !important; /* Ensure QR code scales correctly within the container */
+    height: auto !important; /* Maintain aspect ratio */
+    max-width: 150px !important; /* Maximum width for the QR code */
+}
+
+
+
 
 .popup-text {
     flex: 1; /* Allow the text to take up remaining space */
+    margin-top: 0px !important; /* Space between logo and text */
+    align-items: flex-start; 
+    padding: 0px !important;
+
+
+
+}
+.popup-content {
+    padding: 0px;
+    font-size: 14px;
+    align-items: flex-start;
 }
 
 .styled-list {
