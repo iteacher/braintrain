@@ -106,7 +106,6 @@ input[type="password"] {
 
 }
 
-
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 280px);
@@ -116,9 +115,10 @@ input[type="password"] {
     justify-items: center; /* Centers items horizontally within the grid area */
     width: auto; /* Adjust width if needed */
     height: auto; /* Adjust height if needed */
-    transform: scale(0.9); /* Scale the grid to 90% of its current size */
+    transform: scale(0.8); /* Scale the grid to 90% of its current size */
     transform-origin: center center; /* Ensure scaling happens from the center */
     z-index: 10;
+    margin-top: -30px; /* Adjust this value to move the grid up */
 }
 
 .number-box {
@@ -1007,7 +1007,7 @@ result-popup th,
 #main-content {
     display: flex;
     justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    align-items: flex-start; /* Align items to the top */
     height: 100%; /* Ensure the container takes up full height */
     width: 100%; /* Ensure the container takes up full width */
     position: relative;
@@ -1141,6 +1141,11 @@ label.disabled {
 
 a {
     color: #ccc !important; /* Force the link color to be white */
+    text-decoration: none; /* Remove underline if desired */
+}
+
+.popup_url {
+    color: #2606c4 !important; /* Force the link color to be white */
     text-decoration: none; /* Remove underline if desired */
 }
 
