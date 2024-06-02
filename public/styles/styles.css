@@ -465,6 +465,7 @@ button {
 #score-range-inc,
 #score-range-max {
     margin-right: 0px;
+    color: #ccc;
 }
 
 button:last-child {

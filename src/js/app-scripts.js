@@ -6,6 +6,8 @@ import './firebaseInit.js';
 
 let show_main_content = true; // Change to false to hide content
 let isAuthenticated = false; // Track authentication state
+let enableElementsGlobally = true; // Change to true to enable elements globally
+
 
 
 
@@ -64,30 +66,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         const enableElements = () => {
-            buttons.forEach(button => {
-                button.classList.remove('disabled');
-                button.disabled = false;
-            });
-            scoreRangeMax.classList.remove('disabled');
-            scoreRangeMax.removeAttribute('disabled');
-            document.querySelectorAll('.number-box.small').forEach(input => {
-                input.disabled = false;
-            });
+            if (enableElementsGlobally) {
+                buttons.forEach(button => {
+                    button.classList.remove('disabled');
+                    button.disabled = false;
+                });
+                scoreRangeMax.classList.remove('disabled');
+                scoreRangeMax.removeAttribute('disabled');
+                document.querySelectorAll('.number-box.small').forEach(input => {
+                    input.disabled = false;
+                });
+            }
         };
-        const disableElements = () => {
-            buttons.forEach(button => {
-                button.classList.add('disabled');
-                button.disabled = true;
 
-            });
-            scoreRangeMax.classList.add('disabled');
-            scoreRangeMax.setAttribute('disabled', 'disabled');
-            document.querySelectorAll('.number-box.small').forEach(input => {
-                input.disabled = true;
-            });
+        const disableElements = () => {
+            if (!enableElementsGlobally) {
+                buttons.forEach(button => {
+                    button.classList.add('disabled');
+                    button.disabled = true;
+                });
+                scoreRangeMax.classList.add('disabled');
+                scoreRangeMax.setAttribute('disabled', 'disabled');
+                document.querySelectorAll('.number-box.small').forEach(input => {
+                    input.disabled = true;
+                });
+            }
         };
-        // Initial state - disable buttons
-        disableElements();
+
+        // Initial state - enable or disable buttons based on the global variable
+        if (enableElementsGlobally) {
+            enableElements();
+        } else {
+            disableElements();
+        }
 
         const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -331,6 +342,9 @@ function setupInputListeners() {
                 .catch(error => {
                     console.error('Error resetting scores:', error);
                 });
+        } else {
+                window.alert('You must be logged in and in a group session to reset scores.')
+                console.log('Reset scores cancelled');
         }
     });
 }
@@ -714,6 +728,8 @@ function setupBonusListeners() {
     add3Button.addEventListener('click', function () {
         //console.log('+3 button clicked');
         applyBonusToAllScores(3);
+        updateNeuronFills(); // Ensure fill updates after score changes
+
     });
 
     document.getElementById('add5').addEventListener('click', function () {
@@ -721,6 +737,8 @@ function setupBonusListeners() {
         applyBonusToAllScores(5, () => {
             this.disabled = false; // Re-enable the button after all operations are complete
         });
+        updateNeuronFills(); // Ensure fill updates after score changes
+
     });
 }
 
