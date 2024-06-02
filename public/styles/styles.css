@@ -10,25 +10,34 @@
 
 body,
 html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden; /* Prevent scrolling */
+    display: flex;
+    flex-direction: column;
+    background-color: #1d2c0c; /* Lighter green for a softer look */
+    color: #333; /* Good contrast for readability */
+    position: relative;
+    z-index: -1;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('../images/main_bg3.jpg'); /* Update the path to your image */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
-
-    height: 100%;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    overflow: hidden;
-    /* Prevent scrolling */
-    display: flex;
-    flex-direction: column;
-    background-color: #1d2c0c;
-    /* Lighter green for a softer look */
-    color: #333;
-    /* Good contrast for readability */
-    z-index: -1;
+    background-color: rgba(0, 0, 0, 0.1); /* Black overlay with 40% opacity */
+    mix-blend-mode: overlay; /* Adjust blend mode */
+    z-index: -1; /* Ensure it is behind all other content */
 }
+
 
 .toolbar {
     display: flex;
@@ -40,7 +49,7 @@ html {
     /* Changed from absolute to relative if it needs to be part of the normal document flow */
     display: flex;
     z-index: 10;
-    background-color: #FFFFFF;
+    background-color: #333 !important;
     /* White for a clean, modern appearance */
     color: #333;
     /* Dark text for contrast */
@@ -64,14 +73,14 @@ input[type="password"] {
     /* Ensures the header fills the top part of the page */
 
     text-align: center;
-    padding: 3px 0;
+    padding: 0 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #FFFFFF;
+    background-color: #333 !important;
     /* White for a clean, modern appearance */
-    color: #333;
+    color: #ccc;
     /* Dark text for contrast */
     z-index: 500;
     /* Ensure this is less than the settings icon if needed */
@@ -79,23 +88,37 @@ input[type="password"] {
 
 .header-label {
     font-size: 20px;
-    color: #363636;
+    color: #ccc !important;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+    padding: 0;
+    align-items: center;
+
 }
 
 .footer-label {
     font-size: 10px;
-    color: #363636;
+    color: #ccc !important;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0; /* Remove bottom margin */
+    padding: 0;
+    align-items: center;
+
 }
+
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 280px);
     grid-gap: 10px;
-    padding: px;
+    padding: 0;
     align-items: center;
     justify-items: center; /* Centers items horizontally within the grid area */
-
-
+    width: auto; /* Adjust width if needed */
+    height: auto; /* Adjust height if needed */
+    transform: scale(0.9); /* Scale the grid to 90% of its current size */
+    transform-origin: center center; /* Ensure scaling happens from the center */
+    z-index: 10;
 }
 
 .number-box {
@@ -203,7 +226,7 @@ input[type="password"] {
 
 .line {
     position: absolute;
-    background-color: #000000 !important;
+    background-color: #cccccc !important;
     /* A vibrant green that stands out nicely */
     z-index: 1;
     pointer-events: none;
@@ -979,10 +1002,14 @@ result-popup th,
 }
 
 
+/* Main content should use flexbox for centering */
 #main-content {
-    flex: 1;
-    display: block; /* Ensure it is visible by default */
-
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%; /* Ensure the container takes up full height */
+    width: 100%; /* Ensure the container takes up full width */
+    position: relative;
 }
 
 .page-footer {
@@ -1109,4 +1136,16 @@ label.disabled {
 
 .close-btn:hover {
     background-color: #388E3C; /* Darker green on hover */
+}
+
+a {
+    color: #ccc !important; /* Force the link color to be white */
+    text-decoration: none; /* Remove underline if desired */
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: #ccc !important; /* Ensure the link color stays white on hover, focus, and active states */
+    text-decoration: underline; /* Optionally, add underline on hover */
 }
