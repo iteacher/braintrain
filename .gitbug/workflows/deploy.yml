@@ -1,0 +1,29 @@
+name: Deploy to A2 Hosting
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Start SSH Agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.A2HOSTING_SSH_KEY }}
+
+    - name: Deploy to A2 Hosting
+      run: |
+        ssh -o StrictHostKeyChecking=no -p 7822 manders1@manders-jones.eu << 'EOF'
+          cd ~/node_apps/braintrain/my-app
+          git pull origin master
+          git add .
+          git commit -m "Web host in sync"
+          git push origin master
+        EOF
