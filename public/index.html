@@ -1,61 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Neural Network Simulation App</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Julian Manders-Jones">
-    <meta name="date" content="May 2024">
-    <meta name="license" content="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">
-
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" type="image/x-icon"><meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' 
-        https://accounts.google.com 
-        https://www.gstatic.com 
-        https://apis.google.com 
-        https://unpkg.com 
-        https://braintrain-3bf0f-default-rtdb.firebaseio.com 
-        https://*.firebaseio.com;
-    style-src 'self' 'unsafe-inline' 
-        https://accounts.google.com 
-        https://fonts.googleapis.com;
-    style-src-elem 'self' 'unsafe-inline' 
-        https://fonts.googleapis.com 
-        https://accounts.google.com/gsi/style;
-    connect-src 'self' 
-        https://securetoken.googleapis.com 
-        https://accounts.google.com 
-        https://www.googleapis.com 
-        wss://*.firebaseio.com 
-        wss://s-usc1a-nss-2059.firebaseio.com 
-        https://*.firebaseio.com 
-        https://www.gstatic.com;
-    frame-src 'self' 
-        https://s-usc1a-nss-2059.firebaseio.com 
-        https://braintrain-3bf0f.firebaseapp.com 
-        https://accounts.google.com;
-    object-src 'none';
-    ">
-    <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
-
-
-
-    <link rel="stylesheet" href="%PUBLIC_URL%/styles/styles.css">
+    <head>
+        <title>Neural Network Simulation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Julian Manders-Jones">
+        <meta name="date" content="May 2024">
+        <meta name="license" content="Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)">
     
-    <!-- React and ReactDOM from CDN HERE2-->
-    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' 
+            https://accounts.google.com 
+            https://www.gstatic.com 
+            https://apis.google.com 
+            https://unpkg.com 
+            https://braintrain-3bf0f-default-rtdb.firebaseio.com 
+            https://*.firebaseio.com;
+        style-src 'self' 'unsafe-inline' 
+            https://accounts.google.com 
+            https://fonts.googleapis.com;
+        style-src-elem 'self' 'unsafe-inline' 
+            https://fonts.googleapis.com 
+            https://accounts.google.com/gsi/style;
+        connect-src 'self' 
+            https://securetoken.googleapis.com 
+            https://accounts.google.com 
+            https://www.googleapis.com 
+            wss://*.firebaseio.com 
+            wss://s-usc1a-nss-2059.firebaseio.com 
+            https://*.firebaseio.com 
+            https://www.gstatic.com;
+        frame-src 'self' 
+            https://s-usc1a-nss-2059.firebaseio.com 
+            https://braintrain-3bf0f.firebaseapp.com 
+            https://accounts.google.com;
+        object-src 'none';
+        ">
+        <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
     
-    <!-- Firebase CDN Links -->
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-    
-    <!-- Load Google Identity Services library -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-</head>
+        <link rel="stylesheet" href="%PUBLIC_URL%/styles/styles.css">
+        
+        <!-- React and ReactDOM from CDN -->
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+        
+        <!-- Firebase CDN Links -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+        
+        <!-- Load Google Identity Services library -->
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+    </head>
 <body>
     <div id="root"></div>
  
