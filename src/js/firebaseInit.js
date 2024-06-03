@@ -48,7 +48,7 @@ window.onload = function() {
                     url: 'https://accounts.google.com'
                 }
             ]
-        }
+    }
     }).then(credential => {
         if (credential) {
             handleCredentialResponse(credential);

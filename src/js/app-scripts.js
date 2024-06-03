@@ -93,16 +93,17 @@ document.addEventListener('DOMContentLoaded', function () {
             disableElements();
         }
 
-        const provider = new firebase.auth.GoogleAuthProvider();
-
         signInButton.addEventListener('click', () => {
-            firebase.auth().signInWithPopup(provider)
+            firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(result => {
                 // Handle the sign-in result
                 hideWelcomePopup(); // Hide the welcome popup after successful login
                 enableElements(); // Enable elements after successful login
                 isAuthenticated = true; // Set authenticated to true
-
+                
+                // Load neuron data after successful login
+                loadAllNeuronData();
+        
                 window.addEventListener('beforeunload', function(event) {
                     event.preventDefault();
                     event.returnValue = ''; // This is necessary for Chrome to show the prompt
@@ -1400,18 +1401,14 @@ function checkAuthState() {
 
     window.auth.onAuthStateChanged(user => {
         if (user) {
-            // User is signed in
-            console.log("checkAuthState: User is signed in");
             status.textContent = `Signed in as ${user.displayName}`;
             signInButton.style.display = 'none';
             signOutButton.style.display = 'block';
             mainContent.style.display = 'block';
             isAuthenticated = true; // Set authenticated to true
             drawPermanentLines(); // Draw lines when user is signed in
-            loadAllNeuronData();
-
+            loadAllNeuronData(); // Ensure neuron data is loaded on sign-in
         } else {
-            // User is signed out
             status.textContent = 'Signed out';
             signInButton.style.display = 'block';
             signOutButton.style.display = 'none';
