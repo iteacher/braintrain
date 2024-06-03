@@ -39,31 +39,28 @@ window.onload = function() {
   document.dispatchEvent(firebaseReadyEvent);
 
   // Add event listener for Google Identity Services
-  window.addEventListener('gisLoaded', function() {
-    window.google.accounts.id.initialize({
+  window.google.accounts.id.initialize({
       client_id: '786766490017-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
       callback: handleCredentialResponse
-    });
-    window.google.accounts.id.prompt();
   });
+  window.google.accounts.id.prompt();
 
-  // Handle the credential response
   function handleCredentialResponse(response) {
     const credential = response.credential;
     if (credential) {
-      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(credential))
-        .then(result => {
-          console.log("User signed in with One Tap:", result.user);
-          return result.user.getIdToken();
-        })
-        .then(token => {
-          console.log("Token retrieved successfully:", token);
-        })
-        .catch(error => {
-          console.error("Error during sign-in or token retrieval:", error);
-        });
+        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(credential))
+            .then(result => {
+                console.log("User signed in with One Tap:", result.user);
+                return result.user.getIdToken();
+            })
+            .then(token => {
+                console.log("Token retrieved successfully:", token);
+            })
+            .catch(error => {
+                console.error("Error during sign-in or token retrieval:", error);
+            });
     } else {
-      console.log("No credential received or credential is invalid");
+        console.log("No credential received or credential is invalid");
     }
   }
 

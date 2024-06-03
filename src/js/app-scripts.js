@@ -26,18 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log("Page loaded");
 
     applyConfig(); // Apply cross-domain policies
-    
-    showWelcomePopup(); // Show the welcome popup on page load
-    console.log("Showing welcome popup");
 
-    // Close button for popup4
     const closePopup4Button = document.getElementById('close-popup4');
     if (closePopup4Button) {
         closePopup4Button.addEventListener('click', function () {
             hideWelcomePopup(); // Use the existing function to hide the popup
         });
     }
-
 
     const mainContent = document.getElementById('main-content');
 
@@ -50,10 +45,9 @@ document.addEventListener('DOMContentLoaded', function () {
             mainContent.style.display = 'none';
         }
     }
-    
+
     // Initial call to set visibility based on the global variable
     updateMainContentVisibility();
-
 
     document.addEventListener('firebaseReady', function () {
         console.log("Firebase is ready");
@@ -63,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const status = document.getElementById('sign-in-status');
         const buttons = document.querySelectorAll('.toolbar button, .score-scale-container button');
         const scoreRangeMax = document.getElementById('score-range-max');
-
 
         const enableElements = () => {
             if (enableElementsGlobally) {
@@ -106,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
             firebase.auth().signInWithPopup(provider)
             .then(result => {
                 // Handle the sign-in result
-
                 hideWelcomePopup(); // Hide the welcome popup after successful login
                 enableElements(); // Enable elements after successful login
                 isAuthenticated = true; // Set authenticated to true
@@ -135,17 +127,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     showWelcomePopup(); // Show the welcome popup after signing out
                     disableElements(); // Disable elements after sign out
                     isAuthenticated = false; // Set authenticated to false
-
-
                 })
                 .catch(error => {
                     console.error('Error signing out:', error);
                     status.textContent = `Sign-out failed: ${error.message}`;
                 });
+        });
 
-    });
-
-    console.log("SETTING setupInteractions");
+        console.log("SETTING setupInteractions");
         setupInteractions();
 
         console.log("SETTING UP drawPermanentLines");
@@ -190,15 +179,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("SETTING UP updateNeuronFills");
         updateNeuronFills();
 
-        //console.log("SETTING UP GOOGLE SIGN setupGoogleSignIn");
-        //setupGoogleSignIn();
-
         console.log("CHECKING AUTH STATE");
         checkAuthState();
 
         console.log("****************FINISHED DOM LOAD***************");
     });
-    
+
     document.addEventListener('gisLoaded', function () {
         console.log("Google Identity Services library is ready");
         try {
@@ -210,10 +196,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (!window.firebaseReady) {
-        //console.error('Firebase not ready.');
+        console.error('Firebase not ready.');
     }
 
 });
+
 
 function setupInputListeners() {
 
@@ -225,11 +212,13 @@ function setupInputListeners() {
     inputs.forEach(input => {
         console.log(`Setting listener for input: ${input.name || input.id}`);
         input.addEventListener('input', function () {
+            const neuronId = this.closest('.circle').getAttribute('data-id');
+            handleNeuronUpdate(neuronId);
             if (isAuthenticated) {
-                handleNeuronUpdate(this.dataset.neuronId);
-            } else {
                 updateNeuronFills(); // Ensure fill updates after input changes
-            }        
+            } else {
+                updateNeuronFills();
+            }       
         });
     });
 
@@ -303,8 +292,9 @@ function setupInputListeners() {
 
     document.querySelectorAll('.score').forEach(scoreElement => {
         scoreElement.addEventListener('input', function () {
+            const neuronId = this.closest('.circle').getAttribute('data-id');
+            handleNeuronUpdate(neuronId);
             if (isAuthenticated) {
-                const neuronId = this.closest('.circle').getAttribute('data-id');
                 const scoreValue = parseInt(this.textContent) || 0;
                 updateScoreInDB(neuronId, scoreValue);
             }
@@ -696,10 +686,11 @@ function setupScoreChangeListeners() {
                 let currentScore = parseInt(scoreElement.textContent) || 0;
                 currentScore += 1;
                 scoreElement.textContent = currentScore;
+                handleNeuronUpdate(scoreId);
+                updateNeuronFills(); // Ensure fill updates after score changes
                 if (isAuthenticated) {
                     updateScoreInDB(scoreId, currentScore);
                 }
-                updateNeuronFills(); // Ensure fill updates after score changes
             }
         });
     });
@@ -712,10 +703,12 @@ function setupScoreChangeListeners() {
                 let currentScore = parseInt(scoreElement.textContent) || 0;
                 currentScore -= 1;
                 scoreElement.textContent = currentScore;
+                handleNeuronUpdate(scoreId);
+                updateNeuronFills(); // Ensure fill updates after score changes
+
                 if (isAuthenticated) {
                     updateScoreInDB(scoreId, currentScore);
                 }
-                updateNeuronFills(); // Ensure fill updates after score changes
             }
         });
     });
@@ -1413,13 +1406,16 @@ function checkAuthState() {
             signInButton.style.display = 'none';
             signOutButton.style.display = 'block';
             mainContent.style.display = 'block';
+            isAuthenticated = true; // Set authenticated to true
             drawPermanentLines(); // Draw lines when user is signed in
+            loadAllNeuronData();
 
         } else {
             // User is signed out
             status.textContent = 'Signed out';
             signInButton.style.display = 'block';
             signOutButton.style.display = 'none';
+            isAuthenticated = false; // Set authenticated to false
             if (!show_main_content) {
                 mainContent.style.display = 'none';
             } else {
