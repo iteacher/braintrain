@@ -96,25 +96,25 @@ document.addEventListener('DOMContentLoaded', function () {
         signInButton.addEventListener('click', () => {
             firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
             .then(result => {
-                // Handle the sign-in result
-                hideWelcomePopup(); // Hide the welcome popup after successful login
-                enableElements(); // Enable elements after successful login
-                isAuthenticated = true; // Set authenticated to true
-                
-                // Load neuron data after successful login
+                hideWelcomePopup();
+                enableElements();
+                isAuthenticated = true;
                 loadAllNeuronData();
         
                 window.addEventListener('beforeunload', function(event) {
                     event.preventDefault();
-                    event.returnValue = ''; // This is necessary for Chrome to show the prompt
+                    event.returnValue = '';
                     if (window.opener) {
                         window.opener.postMessage('popupClosed', window.opener.location.origin);
                     }
                 });
             })
             .catch(error => {
-                console.error('Error signing in:', error.message, error.code);
-                alert('Failed to sign in. Please try again.');
+                if (error.code === 'auth/popup-closed-by-user') {
+                    alert('Sign-in was not completed because the popup was closed. Please try again.');
+                } else {
+                    alert('Failed to sign in. Please try again.');
+                }
             });
         });
 
