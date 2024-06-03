@@ -1,0 +1,30 @@
+name: Deploy to Honeycomintranets
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Start Honeycom Push/Pull via SSH Agent
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.HONEYCOM_SSH }}
+
+    - name: Deploy to Honeycomintranets
+      run: |
+        ssh -o StrictHostKeyChecking=no -p 7822 mandersj@manders-jones.net << 'EOF'
+          cd ~/apps/braintrain
+          git pull origin master
+          git add .
+          git commit -m "Honeycomintranets in sync"
+          git push origin master
+        EOF
