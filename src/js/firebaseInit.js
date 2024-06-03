@@ -38,27 +38,32 @@ window.onload = function() {
   const firebaseReadyEvent = new Event('firebaseReady');
   document.dispatchEvent(firebaseReadyEvent);
 
-  // Initialize FedCM
-  if (window.PublicKeyCredential) {
-    navigator.credentials.get({
-        mediation: 'optional',
-        federated: {
-            providers: [
-                {
-                    url: 'https://accounts.google.com'
-                }
-            ]
-    }
-    }).then(credential => {
-        if (credential) {
-            handleCredentialResponse(credential);
-        }
-    }).catch(err => {
-        console.error("FedCM error: ", err);
-    });
-} else {
-    console.error("FedCM not supported");
+// Correct FedCM Implementation
+function initializeFedCM() {
+  if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+      google.accounts.id.initialize({
+          client_id: '786766490017-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
+          callback: handleCredentialResponse,
+          use_fedcm_for_prompt: true // Enable FedCM
+      });
+
+      // Optionally, show the One Tap prompt automatically
+      google.accounts.id.prompt();
+      console.log("initializeFedCM: One Tap prompt automatically shown");
+
+  } else {
+      console.error('Google Identity Services library not loaded.');
+  }
 }
+
+document.addEventListener('gisLoaded', function () {
+  console.log("Google Identity Services library is ready");
+  try {
+      initializeFedCM();
+  } catch (error) {
+      console.error("Error initializing FedCM:", error);
+  }
+});
 
 function handleCredentialResponse(credential) {
     const assertionResponse = credential.response;
