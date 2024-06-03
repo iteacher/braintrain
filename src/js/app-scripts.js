@@ -1421,6 +1421,7 @@ function checkAuthState() {
             console.log("checkAuthState: User is signed out");
         }
     });
+    
 }
 
 // Initialize the FedCM API with FedCM enabled
