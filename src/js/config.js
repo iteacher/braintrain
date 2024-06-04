@@ -3,7 +3,7 @@
 const config = {
     COOP: 'same-origin-allow-popups',
     COEP: 'require-corp',
-    CORS: 'https://manders-jones.eu'
+    CORS: 'https://honeycomintranets.co.uk'
 };
 
 // Apply configuration dynamically
