@@ -721,7 +721,7 @@ function setupBonusListeners() {
         //console.log('+5 button clicked');
         applyBonusToAllScores(5);
         updateNeuronFills(); 
-    };
+    });
 }
 
 function applyBonusToAllScores(bonus, completionCallback) {
