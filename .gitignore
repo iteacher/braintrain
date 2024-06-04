@@ -3,6 +3,7 @@ build/
 node_modules/
 server.js
 stderr.log
+.DS_Store
 package.json
 package-lock.json
 output.log
