@@ -1,6 +1,6 @@
 /* global google firebase */
 /*
-Security Notes: Firebase configuration does not contain any sensitive information.
+Security Notesb Updated: Firebase configuration does not contain any sensitive information.
 The actual authentication is handled by Firebase's servers.
 CHANGE THESE TO YOUR OWN FIREBASE .
 */
