@@ -716,7 +716,7 @@ function setupBonusListeners() {
         updateNeuronFills(); 
     });
 
-    const add5Button = document.getElementById('add3');
+    const add5Button = document.getElementById('add5');
     add5Button.addEventListener('click', function () {
         //console.log('+5 button clicked');
         applyBonusToAllScores(5);
