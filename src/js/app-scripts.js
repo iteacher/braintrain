@@ -837,9 +837,9 @@ function displayResults() {
     neurons.forEach(neuron => {
         const neuronValue = neuron.querySelector('.number-box.large').value;
         const neuronName = neuron.querySelector('.number-box.small').value;
-        let status = 'ON PAR'; // Default status
+        let status = 'Hmmmm..'; // Default status
 
-        if (neuronValue > outputValue) {
+        if (neuronValue >= outputValue) {
             status = 'TOO HIGH';
         } else if (neuronValue < outputValue) {
             status = 'TOO LOW';
