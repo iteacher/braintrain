@@ -1,0 +1,12 @@
+.vscode/
+build/
+node_modules/
+server.js
+stderr.log
+package.json
+package-lock.json
+output.log
+nohup.out
+.env
+.env/
+
