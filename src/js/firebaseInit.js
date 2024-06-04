@@ -1,8 +1,8 @@
-/* global firebase */
+/* global google firebase */
 /*
-Security Note: Firebase configuration does not contain any sensitive information.
+Security Notes: Firebase configuration does not contain any sensitive information.
 The actual authentication is handled by Firebase's servers.
-CHANGE THESE TO YOUR OWN FIREBASE.
+CHANGE THESE TO YOUR OWN FIREBASE .
 */
 
 window.onload = function() {
@@ -38,62 +38,66 @@ window.onload = function() {
   const firebaseReadyEvent = new Event('firebaseReady');
   document.dispatchEvent(firebaseReadyEvent);
 
-// Correct FedCM Implementation
-function initializeFedCM() {
-  if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+  // Correct FedCM Implementation
+  function initializeFedCM() {
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
       google.accounts.id.initialize({
-          client_id: '786766490017-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
-          callback: handleCredentialResponse,
-          use_fedcm_for_prompt: true // Enable FedCM
+        client_id: '786766490017-dr5go1indng9pokg2q7f1ghn93ubeoul.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+        use_fedcm_for_prompt: true // Enable FedCM
       });
 
       // Optionally, show the One Tap prompt automatically
       google.accounts.id.prompt();
       console.log("initializeFedCM: One Tap prompt automatically shown");
 
-  } else {
+    } else {
       console.error('Google Identity Services library not loaded.');
+    }
   }
-}
 
-document.addEventListener('gisLoaded', function () {
-  console.log("Google Identity Services library is ready");
-  try {
-      initializeFedCM();
-  } catch (error) {
+  document.addEventListener('gisLoaded', function () {
+    console.log("Google Identity Services library is ready");
+    try {
+      if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        initializeFedCM();
+      } else {
+        console.error('Google Identity Services library not available.');
+      }
+    } catch (error) {
       console.error("Error initializing FedCM:", error);
-  }
-});
+    }
+  });
 
-function handleCredentialResponse(credential) {
+  function handleCredentialResponse(credential) {
     const assertionResponse = credential.response;
     if (assertionResponse) {
-        const credentialId = assertionResponse.id;
-        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(credentialId))
-            .then(result => {
-                console.log("User signed in with FedCM:", result.user);
-                return result.user.getIdToken();
-            })
-            .then(token => {
-                console.log("Token retrieved successfully:", token);
-                const userId = firebase.auth().currentUser.uid;
-                return firebase.database().ref('/neurons/' + userId).once('value');
-            })
-            .then(snapshot => {
-                const neuronData = snapshot.val();
-                console.log("Neuron data retrieved from database:", neuronData);
-                updateNeurons(neuronData);
-            })
-            .catch(error => {
-                console.error("Error during sign-in or data retrieval:", error);
-            });
+      const credentialId = assertionResponse.id;
+      firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(credentialId))
+        .then(result => {
+          console.log("User signed in with FedCM:", result.user);
+          return result.user.getIdToken();
+        })
+        .then(token => {
+          console.log("Token retrieved successfully:", token);
+          const userId = firebase.auth().currentUser.uid;
+          return firebase.database().ref('/neurons/' + userId).once('value');
+        })
+        .then(snapshot => {
+          const neuronData = snapshot.val();
+          console.log("Neuron data retrieved from database:", neuronData);
+          updateNeurons(neuronData);
+        })
+        .catch(error => {
+          console.error("Error during sign-in or data retrieval:", error);
+        });
     } else {
-        console.log("No assertion response received or response is invalid");
+      console.log("No assertion response received or response is invalid");
     }
-}
+  }
 
-// Existing function to update neurons in the UI
-function updateNeurons(neuronData) {
+  // Existing function to update neurons in the UI
+  function updateNeurons(neuronData) {
     // Your existing code to update neurons in the UI
-}
+  }
 };
