@@ -196,10 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    if (!window.firebaseReady) {
-        console.error('Firebase not ready.');
-    }
-
 });
 
 
