@@ -1,4 +1,4 @@
-/* global google firebase */
+/* here global google firebase */
 /*
 Security Notes: Firebase configuration does not contain any sensitive information.
 The actual authentication is handled by Firebase's servers.
