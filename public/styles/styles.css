@@ -691,7 +691,7 @@ button:hover {
     /* Smoothed corners for a modern look */
     display: none;
     /* Initially hidden */
-    z-index: 2001;
+    z-index: 10000;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     /* Subtle shadow for depth */
     opacity: 0;
@@ -706,6 +706,15 @@ button:hover {
     /* Centered text */
     resize: both;
     overflow: auto;
+}
+
+
+.result-popup.active {
+    display: block !important;
+    opacity: 1 !important;
+    transform: scale(1) !important;
+    z-index: 10000;
+
 }
 
 .popup-header {
@@ -729,6 +738,9 @@ button:hover {
     margin: 0;
 }
 
+.header, .footer, .modal {
+    z-index: 9999; /* Ensure these are lower than result-popup */
+}
 
 
 .resize-handle {
@@ -1037,6 +1049,8 @@ result-popup th,
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
     padding: 0px 0; /* Add padding as needed */
     text-align: center;
+    z-index: 6000; /* Lower than result-popup */
+
 }
 
 button.disabled {

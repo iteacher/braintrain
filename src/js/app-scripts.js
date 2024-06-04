@@ -135,6 +135,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         });
 
+        const closeButton = document.querySelector('.result-popup .close-btn');
+        const resultPopup = document.getElementById('resultPopup');
+
+        if (closeButton && resultPopup) {
+            closeButton.addEventListener('click', function() {
+                resultPopup.style.display = 'none';
+                resultPopup.classList.remove('active');
+            });
+        } else {
+            console.error('Close button or resultPopup not found');
+        }
+
         console.log("SETTING setupInteractions");
         setupInteractions();
 
@@ -234,13 +246,13 @@ function setupInputListeners() {
     }
 
     //listening for io changes to toggle compute button visiblity
-    predictionInput.addEventListener('input', toggleComputeButton());
-    outputNeuronInput.addEventListener('input', toggleComputeButton());
+    predictionInput.addEventListener('input', toggleComputeButton);
+    outputNeuronInput.addEventListener('input', toggleComputeButton);
 
     //Event listener for computer button clicked
     computeButton.addEventListener('click', function () {
 
-        //console.log('Compute button clicked');
+        console.log('Compute button clicked');
         const predictionValue = parseFloat(predictionInput.value);
         const outputValue = parseFloat(outputNeuronInput.value);
 
@@ -276,9 +288,9 @@ function setupInputListeners() {
             });
         }
 
-        if (isAuthenticated) {
-            displayResults();
-        }
+        
+        displayResults();
+        
     });
 
 
@@ -524,6 +536,7 @@ function toggleComputeButton() {
         computeButton.disabled = true;
     } else {
         // Show button
+        console.log('Enabling compute button');
         computeButton.style.opacity = '1';
         computeButton.disabled = false;
     }
@@ -660,11 +673,18 @@ function hideTooLow() {
 }
 
 function showPopup(element) {
-    element.style.display = 'block';
-    element.style.opacity = '1';
-    element.style.transform = 'scale(1)';
-    element.classList.add('active');
+    console.log('showPopup called');
+    if (element) {
+        console.log('Element found:', element);
+        element.style.display = 'block';
+        element.style.opacity = '1';
+        element.style.transform = 'scale(1)';
+        element.classList.add('active');
+    } else {
+        console.error('Element not found');
+    }
 }
+
 
 function setupScoreChangeListeners() {
     const increaseButtons = document.querySelectorAll('.score-change[up-id]');
@@ -802,12 +822,16 @@ function setupResultsPopupListeners() {
 }
 
 function displayResults() {
+    console.log('displayResults called');
+
     const predictionInput = document.getElementById('predictionInput');
     const outputNeuronInput = document.querySelector('.circle.green:last-child .number-box.large');
     const predictionValue = parseFloat(predictionInput.value);
     const outputValue = parseFloat(outputNeuronInput.value);
     const neurons = document.querySelectorAll('.circle.hidden-layer');
     let resultsHtml = '<table><thead><tr><th>Name</th><th>Value</th><th>Status</th></tr></thead><tbody>';
+
+    console.log('displayResults called 2');
 
     // Loop through each neuron and determine its status
     neurons.forEach(neuron => {
@@ -825,6 +849,8 @@ function displayResults() {
         resultsHtml += `<tr><td>${neuronName}</td><td>${neuronValue}</td><td>${status}</td></tr>`;
     });
 
+    console.log('displayResults called 3');
+
     resultsHtml += '</tbody></table>';
     let overallStatus = ''; // or any initial value that suits your needs
 
@@ -837,38 +863,29 @@ function displayResults() {
         overallStatus = 'Output: On Par';
     }
 
+    console.log('displayResults called 4');
+
     // Update the overall status message
     document.getElementById('highLowMessage').textContent = overallStatus;
+
+    console.log('displayResults called 5');
 
     // Update the HTML content of the results table container
     document.getElementById('resultsTableContainer').innerHTML = resultsHtml;
 
+    console.log('displayResults called 6');
+
     // Show the result popup
-    showPopup(document.getElementById('resultPopup'));
+    console.log('Attempting to show results popup');
+    const resultPopupElement = document.getElementById('resultPopup');
+    if (resultPopupElement) {
+        console.log('Found resultPopup element');
+        showPopup(resultPopupElement);
+    } else {
+        console.error('resultPopup element not found');
+    }
 }
 
-// function animateScore(scoreElement, newScore, callback) {
-//     let currentScore = parseInt(scoreElement.textContent);
-//     const duration = 500; // Duration of the animation in milliseconds
-//     const frameRate = 10; // Duration between each update
-//     const totalFrames = duration / frameRate;
-//     const increment = (newScore - currentScore) / totalFrames;
-
-//     let frame = 0;
-//     const counter = setInterval(() => {
-//         frame++;
-//         currentScore += increment;
-//         scoreElement.textContent = Math.floor(currentScore);
-//         if (frame === totalFrames) {
-//             scoreElement.textContent = newScore; // Ensures it ends on the exact value
-//             clearInterval(counter);
-//             scoreElement.classList.remove('score-animate');
-//             if (callback) callback(); // Execute callback after animation completes
-//         }
-//     }, frameRate);
-
-//     scoreElement.classList.add('score-animate');
-// }
 
 function resizeText() {
     const smallBoxes = document.querySelectorAll('.number-box.small');
@@ -972,6 +989,10 @@ function setupSettingButton() {
         document.getElementById('load-game'),
 
     ];
+    // hide buttons
+    buttonsToToggle.forEach(button => {
+        button.style.display = 'none';
+    });
 
 
     settingsIcon.addEventListener('click', function () {
