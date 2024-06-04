@@ -185,8 +185,8 @@ input[type="password"] {
     text-align: center;
     width: 100px;
     color: black;
-    height: 8px;
-    font-size: 10px;
+    height: 18px;
+    font-size: 14px;
     border: 1px solid #BDBDBD;
     /* Consistent border styling */
     background-color: #FAFAFA;
