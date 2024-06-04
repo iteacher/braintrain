@@ -210,12 +210,7 @@ function setupInputListeners() {
         console.log(`Setting listener for input: ${input.name || input.id}`);
         input.addEventListener('input', function () {
             const neuronId = this.closest('.circle').getAttribute('data-id');
-            handleNeuronUpdate(neuronId);
-            if (isAuthenticated) {
-                updateNeuronFills(); // Ensure fill updates after input changes
-            } else {
-                updateNeuronFills();
-            }       
+            handleNeuronUpdate(neuronId);      
         });
     });
 
@@ -684,7 +679,7 @@ function setupScoreChangeListeners() {
                 currentScore += 1;
                 scoreElement.textContent = currentScore;
                 handleNeuronUpdate(scoreId);
-                updateNeuronFills(); // Ensure fill updates after score changes
+                //updateNeuronFills(); // Ensure fill updates after score changes
                 if (isAuthenticated) {
                     updateScoreInDB(scoreId, currentScore);
                 }
@@ -701,7 +696,7 @@ function setupScoreChangeListeners() {
                 currentScore -= 1;
                 scoreElement.textContent = currentScore;
                 handleNeuronUpdate(scoreId);
-                updateNeuronFills(); // Ensure fill updates after score changes
+                //updateNeuronFills(); // Ensure fill updates after score changes
 
                 if (isAuthenticated) {
                     updateScoreInDB(scoreId, currentScore);
@@ -718,18 +713,15 @@ function setupBonusListeners() {
     add3Button.addEventListener('click', function () {
         //console.log('+3 button clicked');
         applyBonusToAllScores(3);
-        updateNeuronFills(); // Ensure fill updates after score changes
-
+        updateNeuronFills(); 
     });
 
-    document.getElementById('add5').addEventListener('click', function () {
-        this.disabled = true; // Disable the button to prevent further clicks during processing
-        applyBonusToAllScores(5, () => {
-            this.disabled = false; // Re-enable the button after all operations are complete
-        });
-        updateNeuronFills(); // Ensure fill updates after score changes
-
-    });
+    const add5Button = document.getElementById('add3');
+    add5Button.addEventListener('click', function () {
+        //console.log('+5 button clicked');
+        applyBonusToAllScores(5);
+        updateNeuronFills(); 
+    };
 }
 
 function applyBonusToAllScores(bonus, completionCallback) {
@@ -1133,7 +1125,7 @@ function handleNeuronUpdate(neuronId) {
                 if (isAuthenticated) {
                     setNeuronData(neuronId, 'labelScore', labelScoreElement.textContent || labelScoreElement.value);
                 }
-                updateNeuronFills(); // Ensure fill updates after score changes
+                //updateNeuronFills(); // Ensure fill updates after score changes
             };
             if (labelScoreElement.isContentEditable) {
                 labelScoreElement.addEventListener('input', updateScore);
@@ -1148,7 +1140,7 @@ function handleNeuronUpdate(neuronId) {
                 if (isAuthenticated) {
                     setNeuronData(neuronId, 'small', numberBoxSmallElement.value);
                 }
-                updateNeuronFills(); // Ensure fill updates after small box changes
+                //updateNeuronFills(); // Ensure fill updates after small box changes
             });
         }
 
@@ -1157,7 +1149,7 @@ function handleNeuronUpdate(neuronId) {
                 if (isAuthenticated) {
                     setNeuronData(neuronId, 'large', numberBoxLargeElement.value);
                 }
-                updateNeuronFills(); // Ensure fill updates after large box changes
+                //updateNeuronFills(); // Ensure fill updates after large box changes
             });
         }
     } else {
@@ -1177,8 +1169,6 @@ function listenForNeuronChanges(neuronId) {
         }
     });
 }
-
-
 
 // Function to update the DOM based on the neuron data
 function updateNeuronDisplay(neuronId, data) {
@@ -1208,15 +1198,6 @@ function updateNeuronDisplay(neuronId, data) {
         fillElement.style.height = `${data.fill}%`; // Update fill based on the percentage stored in the database
     }
 }
-
-// function saveNeuronData(neuronId, data) {
-//     const dbRef = window.db.ref('neurons/' + neuronId);
-//     dbRef.set(data).then(() => {
-//         console.log("Neuron data saved successfully!");
-//     }).catch((error) => {
-//         console.error("Error saving neuron data:", error);
-//     });
-// }
 
 function setupNeuronListeners() {
     // Selects all neuron elements including input, hidden-layer, and output neurons
@@ -1278,7 +1259,7 @@ function updateNeuronData(neuronId, inputType, inputValue) {
     neuronRef.update(updates)
         .then(() => {
             console.log('Data updated successfully for neuron:', neuronId);
-            updateNeuronFills(); // Ensure fill updates after data changes
+            //updateNeuronFills(); // Ensure fill updates after data changes
         })
         .catch((error) => {
             console.error('Failed to update data for neuron:', neuronId, error);
@@ -1298,8 +1279,8 @@ function loadAllNeuronData() {
                 console.log('Done updating each neuron');
 
                 updateNeuronDisplay(neuronId, neuronData);
+                updateNeuronFills(); // Ensure fill colors are updated after all data is loaded
             });
-            updateNeuronFills(); // Ensure fill colors are updated after all data is loaded
         } else {
             console.log('No neuron data available');
         }
@@ -1349,45 +1330,13 @@ function updateScoreInDB(neuronId, newScore) {
     neuronRef.update(updates)
         .then(() => {
             console.log('Score and fill updated successfully for neuron:', neuronId);
-            updateNeuronFills(); // Ensure fill updates after score changes
+            //updateNeuronFills(); // Ensure fill updates after score changes
         })
         .catch((error) => {
             console.error('Failed to update score and fill for neuron:', neuronId, error);
         });
 }
 
-
-// function updateScoreAndFill(neuronId, newScore) {
-//     const maxScore = parseInt(document.getElementById('score-range-max').textContent);
-//     const fillPercentage = Math.min(100, (newScore / maxScore) * 100);
-
-//     const updates = {
-//         score: newScore,
-//         fill: fillPercentage
-//     };
-
-//     console.log('Accessing Firedb');
-
-
-//     const neuronRef = window.db.ref('neurons/' + neuronId);
-//     set(neuronRef, updates); // TO CHECK AND UPDATE
-// }
-
-// function applyNeuronDataFromDB(neuronId, data) {
-//     const neuronElement = document.querySelector(`.circle[data-id="${neuronId}"]`);
-//     if (!neuronElement) {
-//         console.error("Neuron with ID", neuronId, "not found");
-//         return;
-//     }
-
-//     const scoreElement = neuronElement.querySelector('.score');
-//     const fillElement = neuronElement.querySelector('.fill'); // Ensure this selector matches your fill element
-
-//     if (scoreElement && fillElement && data.fill !== undefined) {
-//         scoreElement.textContent = data.score; // Update score text
-//         fillElement.style.height = `${data.fill}%`; // Apply fill percentage from the database
-//     }
-// }
 
 function checkAuthState() {
     const signInButton = document.getElementById('sign-in');
